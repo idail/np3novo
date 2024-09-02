@@ -1,0 +1,1 @@
+ C:\\xampp\\htdocs\\np3novo\\.dart_tool\\flutter_build\\806978f0bc651d784b416cc26fa4353c\\native_assets.yaml: 
