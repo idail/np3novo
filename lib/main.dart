@@ -97,11 +97,11 @@ class _MyAppState extends State<MyApp> {
 }
 
 class NavBarPage extends StatefulWidget {
-  String tipoacesso;
-  NavBarPage({super.key, this.initialPage, this.page, required this.tipoacesso});
+  NavBarPage({super.key, this.initialPage, this.page, this.tipoacesso});
 
   final String? initialPage;
   final Widget? page;
+  final String? tipoacesso;
 
   @override
   _NavBarPageState createState() => _NavBarPageState();
@@ -117,13 +117,12 @@ class _NavBarPageState extends State<NavBarPage> {
     super.initState();
     _currentPageName = widget.initialPage ?? _currentPageName;
     _currentPage = widget.page;
-    print(widget.tipoacesso);
   }
 
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'Main_Home': MainHomeWidget(perfilacesso: "",),
+      'Main_Home': MainHomeWidget(),
       'Main_customerList': const MainCustomerListWidget(),
       'Main_Contracts': const MainContractsWidget(),
       'Main_messages': const MainMessagesWidget(),

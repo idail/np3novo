@@ -9,8 +9,8 @@ import 'main_home_model.dart';
 export 'main_home_model.dart';
 
 class MainHomeWidget extends StatefulWidget {
-  String perfilacesso;
-  MainHomeWidget({super.key, required this.perfilacesso});
+  String? tipoacesso;
+  MainHomeWidget({Key? key, this.tipoacesso}) : super(key: key);
 
   @override
   State<MainHomeWidget> createState() => _MainHomeWidgetState();
@@ -31,10 +31,10 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
   @override
   void initState() {
     super.initState();
+    
+    print(widget.tipoacesso);
 
     _model = createModel(context, () => MainHomeModel());
-
-    print(widget.perfilacesso);
 
     //logFirebaseEvent('screen_view', parameters: {'screen_name': 'Main_Home'});
     animationsMap.addAll({

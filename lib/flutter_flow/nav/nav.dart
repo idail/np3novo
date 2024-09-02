@@ -15,8 +15,6 @@ const kTransitionInfoKey = '__transition_info__';
 
 class AppStateNotifier extends ChangeNotifier {
   AppStateNotifier._();
-  String tipoacesso = "";
-  AppStateNotifier({required String tipoAcesso});
 
   static AppStateNotifier? _instance;
   static AppStateNotifier get instance => _instance ??= AppStateNotifier._();
@@ -77,37 +75,37 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ),
         FFRoute(
           name: 'Main_Home',
-          path: '/mainHome',
+          path: '/mainHome/:tipoacesso',
           builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'Main_Home',tipoacesso: appStateNotifier.tipoacesso)
-              : MainHomeWidget(perfilacesso: appStateNotifier.tipoacesso,),
+              ? NavBarPage(initialPage: 'Main_Home',tipoacesso: params.getParam('tipoacesso', ParamType.String))
+              : MainHomeWidget(tipoacesso: params.getParam('tipoacesso', ParamType.String)),
         ),
         FFRoute(
           name: 'Main_customerList',
           path: '/mainCustomerList',
           builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'Main_customerList',tipoacesso: appStateNotifier.tipoacesso,)
+              ? NavBarPage(initialPage: 'Main_customerList')
               : const MainCustomerListWidget(),
         ),
         FFRoute(
           name: 'Main_Contracts',
           path: '/mainContracts',
           builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'Main_Contracts',tipoacesso: appStateNotifier.tipoacesso,)
+              ? NavBarPage(initialPage: 'Main_Contracts',)
               : const MainContractsWidget(),
         ),
         FFRoute(
           name: 'Main_messages',
           path: '/mainMessages',
           builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'Main_messages',tipoacesso: appStateNotifier.tipoacesso,)
+              ? NavBarPage(initialPage: 'Main_messages',)
               : const MainMessagesWidget(),
         ),
         FFRoute(
           name: 'Main_profilePage',
           path: '/mainProfilePage',
           builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'Main_profilePage',tipoacesso: appStateNotifier.tipoacesso,)
+              ? NavBarPage(initialPage: 'Main_profilePage',)
               : const MainProfilePageWidget(),
         ),
         FFRoute(

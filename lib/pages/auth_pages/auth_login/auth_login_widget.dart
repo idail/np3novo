@@ -345,7 +345,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
 
   Future<void> logar(String usuario, String senha) async {
     var uri = Uri.parse(
-        "http://192.168.100.46/np3beneficios_appphp/api/autenticacao/autenticacao.php?usuario=$usuario&senha=$senha");
+        "http://10.80.130.70/np3beneficios_appphp/api/autenticacao/autenticacao.php?usuario=$usuario&senha=$senha");
     var resposta = await http.get(uri, headers: {"Accept": "application/json"});
     print(resposta.body);
     var retorno = jsonDecode(resposta.body);
@@ -377,11 +377,10 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
        String tipoAcesso = await verificaLogin(nome_grupo);
 
       //MyApp(perfilacesso:tipoAcesso);
-      MainHomeWidget(perfilacesso: tipoAcesso);
-      AppStateNotifier(tipoAcesso: tipoAcesso);
-      NavBarPage(tipoacesso: tipoAcesso,);
+      //AppStateNotifier();
+      //NavBarPage();
 
-      context.pushNamed('Main_Home');
+      context.pushNamed('Main_Home',pathParameters: {"tipoacesso":tipoAcesso});
 
       // if (tipoAcesso == "gestor") {
       //   Navigator.pushReplacement(
