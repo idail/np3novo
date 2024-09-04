@@ -75,10 +75,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ),
         FFRoute(
           name: 'Main_Home',
-          path: '/mainHome/:tipoacesso',
-          builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'Main_Home',tipoacesso: params.getParam('tipoacesso', ParamType.String))
-              : MainHomeWidget(tipoacesso: params.getParam('tipoacesso', ParamType.String)),
+          path: '/mainHome/:tipoacesso/:nomeusuario/:usuario_codigo',
+          builder: (context, params) => NavBarPage(initialPage: 'Main_Home',tipoacesso: params.getParam('tipoacesso', ParamType.String), 
+              nomeusuario:params.getParam("nomeusuario", ParamType.String),usuario_codigo:params.getParam("usuario_codigo", ParamType.int)),
         ),
         FFRoute(
           name: 'Main_customerList',

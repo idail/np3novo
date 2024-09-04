@@ -7,10 +7,13 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'main_home_model.dart';
 export 'main_home_model.dart';
+import 'package:http/http.dart' as http;
 
 class MainHomeWidget extends StatefulWidget {
-  String? tipoacesso;
-  MainHomeWidget({Key? key, this.tipoacesso}) : super(key: key);
+  final String? tipoacesso;
+  final String? nomeusuario;
+  final int ?codigousuario;
+  MainHomeWidget({Key? key, this.tipoacesso, this.nomeusuario, this.codigousuario}) : super(key: key);
 
   @override
   State<MainHomeWidget> createState() => _MainHomeWidgetState();
@@ -26,13 +29,25 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
 
   final animationsMap = <String, AnimationInfo>{};
 
-  var tipoacesso = "";
-
   @override
   void initState() {
     super.initState();
+
+    String recebe = "${widget.tipoacesso} - ${widget.nomeusuario}";
     
-    print(widget.tipoacesso);
+    print(recebe);
+
+    var recebe_tipo_acesso = "";
+
+    if(widget.tipoacesso != "")
+      recebe_tipo_acesso = widget.tipoacesso!;
+
+    var recebe_codigo_usuario = 0;
+
+    if(widget.codigousuario != 0)
+      recebe_codigo_usuario = widget.codigousuario!;
+
+    carregaInformacoes(recebe_tipo_acesso, recebe_codigo_usuario);
 
     _model = createModel(context, () => MainHomeModel());
 
@@ -832,6 +847,109 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
     super.dispose();
   }
 
+  double valorEmpenhoGestor = 0;
+  double valorEmpenhoRecebido = 0;
+  double valorConsumido = 0;
+  double saldoAtual = 0;
+  double valorRecebido = 0;
+  double valorPendente = 0;
+  double valorTotal = 0;
+  String valorConsumidoString = "";
+
+  Future<void> carregaInformacoes(String perfil,int codigo_usuario) async
+  {
+    var busca_empenho = "valor_empenho";
+    var busca_valor_cotacao = "valor_cotacao";
+    var busca_cotacao_pago = "valor_cotacao_pago";
+    var busca_cotacao_aberto = "valor_cotacao_aberto";
+    if(perfil == "gestor")
+    {
+      var uri = Uri.parse(
+        "http://192.168.100.46/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_empenho");
+      var resposta = await http.get(uri, headers: {"Accept": "application/json"});
+      var retorno = jsonDecode(resposta.body);
+
+      for (var i = 0; i < retorno.length; i++) {
+        var valor_empenho_string = retorno[i]["valor_empenho"];
+        double valorEmpenho = valor_empenho_string.toDouble();
+        if(valorEmpenho > 0){
+          print(retorno[i]["valor_empenho"]);
+          valorEmpenhoRecebido = retorno[i]["valor_empenho"];
+          print(valorEmpenho);
+        }else{
+          print("zerado");
+        }
+      }
+
+      var uri_cotacao = Uri.parse(
+        "http://192.168.100.46/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_valor_cotacao");
+      var resposta_cotacao = await http.get(uri_cotacao, headers: {"Accept": "application/json"});
+      var retorno_cotacao = jsonDecode(resposta_cotacao.body);
+      
+      print(retorno_cotacao);
+
+
+      var recebeGestor = retorno_cotacao[0]['SUM(valor_total_cotacao)'];
+      
+      // Suponha que você tenha o valor assim:
+      //List<Map<String, int>> resultado = retorno_cotacao[0];
+
+      // Acessar o primeiro item da lista (que é um mapa)
+      //Map<String, int> mapa = resultado[0];
+
+      // Acessar o valor do mapa usando a chave
+      //int valorC = mapa['SUM(valor_total_cotacao)'] ?? 0;
+
+      
+
+      //print(valorConsumido); // Output: 662
+
+      print(valorConsumido);
+
+        setState(() {
+          valorEmpenhoGestor = valorEmpenhoRecebido;
+
+          valorConsumido = recebeGestor.toDouble();
+          if(valorEmpenhoGestor != "" && valorConsumido != "")
+            saldoAtual = valorEmpenhoGestor - valorConsumido;
+        });
+    }else{
+      var uri = Uri.parse(
+      "http://192.168.15.200/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_cotacao_pago");
+      var resposta_fornecedor = await http.get(uri, headers: {"Accept": "application/json"});
+      var retorno_fornecedor = jsonDecode(resposta_fornecedor.body);
+
+      print(retorno_fornecedor);
+
+      // Acessa o primeiro item da lista que retorna da API
+      var recebeFornecedor = retorno_fornecedor[0]['sum(valor_total_cotacao)'];
+
+      // Acessar o valor associado à chave "SUM(valor_total_cotacao)"
+      //double valorConsumido = recebe['SUM(valor_total_cotacao)'] ?? 0.0;
+
+      print(valorConsumido); // Output: 662.0 (por exemplo)
+
+      var uri_cotacao_aberto = Uri.parse(
+      "http://192.168.15.200/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_cotacao_aberto");
+      var resposta_fornecedor_aberto = await http.get(uri_cotacao_aberto, headers: {"Accept": "application/json"});
+      var retorno_fornecedor_aberto = jsonDecode(resposta_fornecedor_aberto.body);
+
+      var recebeFornecedorAberto = retorno_fornecedor_aberto[0]["sum(valor_total_cotacao)"];
+
+      print(retorno_fornecedor_aberto);
+
+      setState(() {
+        //valorRecebido = recebeFornecedor.toDouble();  
+        valorPendente = double.parse(recebeFornecedor);
+        //valorPendente = recebeFornecedorAberto.toDouble();
+        valorPendente = double.parse(recebeFornecedorAberto);
+
+        if(valorRecebido != "" && valorPendente != "")
+        saldoAtual = valorRecebido - valorPendente;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -938,10 +1056,7 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
                                           padding:
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   16.0, 0.0, 16.0, 16.0),
-                                          child: Text(
-                                            FFLocalizations.of(context).getText(
-                                              'nnv46x35' /* Below is a summary of your tea... */,
-                                            ),
+                                          child: Text("",
                                             textAlign: TextAlign.start,
                                             style: FlutterFlowTheme.of(context)
                                                 .labelMedium
@@ -1052,7 +1167,7 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
                                                                   12.0),
                                                           child: Icon(
                                                             Icons
-                                                                .group_outlined,
+                                                                .shopping_basket,
                                                             color: Colors.white,
                                                             size: 24.0,
                                                           ),
@@ -1074,12 +1189,7 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          Text(
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .getText(
-                                                              'jqevo63s' /* New Customers */,
-                                                            ),
+                                                          Text(widget.tipoacesso == 'gestor' ? 'VALORES DO EMPENHO' : 'VALOR RECEBIDO',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
                                                                 .labelMedium
@@ -1100,12 +1210,9 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
                                                                         8.0,
                                                                         0.0,
                                                                         0.0),
-                                                            child: Text(
-                                                              FFLocalizations.of(
-                                                                      context)
-                                                                  .getText(
-                                                                'd0r4w3cc' /* 24 */,
-                                                              ),
+                                                            child: Text(widget.tipoacesso == "gestor" 
+    ? valorEmpenhoGestor.toStringAsFixed(2) 
+    : valorRecebido.toStringAsFixed(2),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .displaySmall
@@ -1203,7 +1310,7 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
                                                                   12.0),
                                                           child: Icon(
                                                             Icons
-                                                                .home_work_outlined,
+                                                                .shopping_basket,
                                                             color: Colors.white,
                                                             size: 24.0,
                                                           ),
@@ -1225,12 +1332,7 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          Text(
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .getText(
-                                                              '8vot9bzj' /* New Contracts */,
-                                                            ),
+                                                          Text(widget.tipoacesso == 'gestor' ? 'VALORES CONSUMIDOS' : 'VALOR PENDENTE',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
                                                                 .labelMedium
@@ -1251,12 +1353,7 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
                                                                         8.0,
                                                                         0.0,
                                                                         0.0),
-                                                            child: Text(
-                                                              FFLocalizations.of(
-                                                                      context)
-                                                                  .getText(
-                                                                '463rfkem' /* 3,200 */,
-                                                              ),
+                                                            child: Text(widget.tipoacesso == "gestor" ? valorConsumido.toStringAsFixed(2) : valorPendente.toStringAsFixed(2),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .displaySmall
@@ -1354,7 +1451,7 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
                                                                   12.0),
                                                           child: Icon(
                                                             Icons
-                                                                .account_tree_outlined,
+                                                                .shopping_basket,
                                                             color: Colors.white,
                                                             size: 24.0,
                                                           ),
@@ -1376,12 +1473,7 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          Text(
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .getText(
-                                                              'saxskj92' /* Expired Contracts */,
-                                                            ),
+                                                          Text(widget.tipoacesso == 'gestor' ? 'SALDO ATUAL' : 'VALOR PENDENTE',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
                                                                 .labelMedium
@@ -1402,12 +1494,9 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
                                                                         8.0,
                                                                         0.0,
                                                                         0.0),
-                                                            child: Text(
-                                                              FFLocalizations.of(
-                                                                      context)
-                                                                  .getText(
-                                                                '2wlrr5lg' /* 4300 */,
-                                                              ),
+                                                            child: Text(widget.tipoacesso == "gestor" 
+    ? saldoAtual.toStringAsFixed(2) 
+    : saldoAtual.toStringAsFixed(2),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .displaySmall

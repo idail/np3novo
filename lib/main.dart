@@ -97,11 +97,14 @@ class _MyAppState extends State<MyApp> {
 }
 
 class NavBarPage extends StatefulWidget {
-  NavBarPage({super.key, this.initialPage, this.page, this.tipoacesso});
+  NavBarPage({super.key, this.initialPage, this.page, this.tipoacesso, this.nomeusuario, this.usuario_codigo, this.codigo_departamento_fornecedor});
 
   final String? initialPage;
   final Widget? page;
   final String? tipoacesso;
+  final String? nomeusuario;
+  final int? usuario_codigo;
+  final int? codigo_departamento_fornecedor;
 
   @override
   _NavBarPageState createState() => _NavBarPageState();
@@ -122,8 +125,8 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'Main_Home': MainHomeWidget(),
-      'Main_customerList': const MainCustomerListWidget(),
+      'Main_Home': MainHomeWidget(tipoacesso: widget.tipoacesso,codigousuario: widget.usuario_codigo,nomeusuario: widget.nomeusuario,),
+      //'Main_customerList': const MainCustomerListWidget(),
       'Main_Contracts': const MainContractsWidget(),
       'Main_messages': const MainMessagesWidget(),
       'Main_profilePage': const MainProfilePageWidget(),
@@ -148,7 +151,7 @@ class _NavBarPageState extends State<NavBarPage> {
           selectedItemColor: FlutterFlowTheme.of(context).primary,
           unselectedItemColor: FlutterFlowTheme.of(context).secondaryText,
           showSelectedLabels: true,
-          showUnselectedLabels: false,
+          showUnselectedLabels: true,
           type: BottomNavigationBarType.fixed,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -160,51 +163,49 @@ class _NavBarPageState extends State<NavBarPage> {
                 Icons.dashboard_rounded,
                 size: 32.0,
               ),
-              label: FFLocalizations.of(context).getText(
-                'xdxbdj20' /* __ */,
-              ),
+              label: 
+                "Dashboard",
+              
               tooltip: '',
             ),
+            // BottomNavigationBarItem(
+            //   icon: const Icon(
+            //     Icons.supervised_user_circle_outlined,
+            //     size: 24.0,
+            //   ),
+            //   activeIcon: const Icon(
+            //     Icons.supervised_user_circle_sharp,
+            //     size: 32.0,
+            //   ),
+            //   label: FFLocalizations.of(context).getText(
+            //     '3ourv2w9' /* __ */,
+            //   ),
+            //   tooltip: '',
+            // ),
             BottomNavigationBarItem(
               icon: const Icon(
-                Icons.supervised_user_circle_outlined,
+                Icons.receipt,
                 size: 24.0,
               ),
               activeIcon: const Icon(
-                Icons.supervised_user_circle_sharp,
+                Icons.receipt,
                 size: 32.0,
               ),
-              label: FFLocalizations.of(context).getText(
-                '3ourv2w9' /* __ */,
-              ),
+              label: 
+                "Pedidos",
+              
               tooltip: '',
             ),
             BottomNavigationBarItem(
               icon: const Icon(
-                Icons.home_work_outlined,
+                Icons.map,
                 size: 24.0,
               ),
               activeIcon: const Icon(
-                Icons.home_work_rounded,
-                size: 32.0,
-              ),
-              label: FFLocalizations.of(context).getText(
-                'j08eiorc' /* __ */,
-              ),
-              tooltip: '',
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(
-                Icons.forum_outlined,
+                Icons.map,
                 size: 24.0,
               ),
-              activeIcon: const Icon(
-                Icons.forum_rounded,
-                size: 24.0,
-              ),
-              label: FFLocalizations.of(context).getText(
-                'smtxdnbn' /* __ */,
-              ),
+              label: "Mapa",
               tooltip: '',
             ),
             BottomNavigationBarItem(
@@ -216,9 +217,7 @@ class _NavBarPageState extends State<NavBarPage> {
                 Icons.account_circle,
                 size: 32.0,
               ),
-              label: FFLocalizations.of(context).getText(
-                'o3dp9tss' /* __ */,
-              ),
+              label: "Perfil",
               tooltip: '',
             )
           ],

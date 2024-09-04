@@ -345,7 +345,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
 
   Future<void> logar(String usuario, String senha) async {
     var uri = Uri.parse(
-        "http://10.80.130.70/np3beneficios_appphp/api/autenticacao/autenticacao.php?usuario=$usuario&senha=$senha");
+        "http://192.168.100.46/np3beneficios_appphp/api/autenticacao/autenticacao.php?usuario=$usuario&senha=$senha");
     var resposta = await http.get(uri, headers: {"Accept": "application/json"});
     print(resposta.body);
     var retorno = jsonDecode(resposta.body);
@@ -353,7 +353,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
     if(retorno == "nenhum usuario localizado"){
       //mostrarAlerta("Informação", "Favor verificar os dados preenchidos");
     }else{
-    var codigo_departamento_fornecedor;
+    int codigo_departamento_fornecedor;
     var nome_grupo = retorno["nome_grupo_usuario"];
     var nome_usuario = retorno["nome"];
     var login_usuario = retorno["login_usuario"];
@@ -362,10 +362,10 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
 
     if (retorno["codigo_departamento_fornecedor"] != null &&
         retorno["codigo_departamento_fornecedor"].toString().isNotEmpty) {
-      codigo_departamento_fornecedor = retorno["codigo_departamento_fornecedor"].toString();
+      codigo_departamento_fornecedor = int.parse(retorno["codigo_departamento_fornecedor"]);
       print(codigo_departamento_fornecedor);
     }else{
-      codigo_departamento_fornecedor = "";
+      codigo_departamento_fornecedor = 0;
     }
 
     var email_usuario = "";
@@ -380,7 +380,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
       //AppStateNotifier();
       //NavBarPage();
 
-      context.pushNamed('Main_Home',pathParameters: {"tipoacesso":tipoAcesso});
+      context.pushNamed('Main_Home',pathParameters: {"tipoacesso":tipoAcesso,"nomeusuario":nome_usuario,"usuario_codigo":codigo_usuario});
 
       // if (tipoAcesso == "gestor") {
       //   Navigator.pushReplacement(
