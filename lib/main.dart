@@ -10,7 +10,7 @@ import 'index.dart';
 
 class MyApp extends StatefulWidget {
   //late String perfilacesso = "";
-  MyApp({super.key});
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -28,7 +28,7 @@ void main() async {
 
   await FlutterFlowTheme.initialize();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class _MyAppState extends State<MyApp> {
@@ -127,7 +127,7 @@ class _NavBarPageState extends State<NavBarPage> {
     final tabs = {
       'Main_Home': MainHomeWidget(tipoacesso: widget.tipoacesso,codigousuario: widget.usuario_codigo,nomeusuario: widget.nomeusuario,),
       //'Main_customerList': const MainCustomerListWidget(),
-      'Main_Contracts': const MainContractsWidget(),
+      'Main_Contracts': MainContractsWidget(usuariocodigo: widget.usuario_codigo,tipo_acesso: widget.tipoacesso),
       'Main_messages': const MainMessagesWidget(),
       'Main_profilePage': const MainProfilePageWidget(),
     };
