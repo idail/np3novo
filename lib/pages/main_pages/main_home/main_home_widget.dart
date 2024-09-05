@@ -865,16 +865,16 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
     if(perfil == "gestor")
     {
       var uri = Uri.parse(
-        "http://192.168.100.6/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_empenho");
+        "http://192.168.15.200/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_empenho");
       var resposta = await http.get(uri, headers: {"Accept": "application/json"});
       var retorno = jsonDecode(resposta.body);
 
       for (var i = 0; i < retorno.length; i++) {
         var valor_empenho_string = retorno[i]["valor_empenho"];
-        double valorEmpenho = valor_empenho_string.toDouble();
+        double valorEmpenho = double.parse(valor_empenho_string);
         if(valorEmpenho > 0){
           print(retorno[i]["valor_empenho"]);
-          valorEmpenhoRecebido =  retorno[i]["valor_empenho"];
+          valorEmpenhoRecebido = double.parse(retorno[i]["valor_empenho"]);
           print(valorEmpenho);
         }else{
           print("zerado");
@@ -882,7 +882,7 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
       }
 
       var uri_cotacao = Uri.parse(
-        "http://192.168.100.6/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_valor_cotacao");
+        "http://192.168.15.200/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_valor_cotacao");
       var resposta_cotacao = await http.get(uri_cotacao, headers: {"Accept": "application/json"});
       var retorno_cotacao = jsonDecode(resposta_cotacao.body);
       
@@ -909,13 +909,13 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
         setState(() {
           valorEmpenhoGestor = valorEmpenhoRecebido;
 
-          valorConsumido = recebeGestor.toDouble();
+          valorConsumido = double.parse(recebeGestor);
           if(valorEmpenhoGestor != "" && valorConsumido != "")
             saldoAtual = valorEmpenhoGestor - valorConsumido;
         });
     }else{
       var uri = Uri.parse(
-      "http://192.168.100.6/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_cotacao_pago");
+      "http://192.168.15.200/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_cotacao_pago");
       var resposta_fornecedor = await http.get(uri, headers: {"Accept": "application/json"});
       var retorno_fornecedor = jsonDecode(resposta_fornecedor.body);
 
@@ -930,7 +930,7 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
       print(valorConsumido); // Output: 662.0 (por exemplo)
 
       var uri_cotacao_aberto = Uri.parse(
-      "http://192.168.100.6/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_cotacao_aberto");
+      "http://192.168.15.200/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_cotacao_aberto");
       var resposta_fornecedor_aberto = await http.get(uri_cotacao_aberto, headers: {"Accept": "application/json"});
       var retorno_fornecedor_aberto = jsonDecode(resposta_fornecedor_aberto.body);
 

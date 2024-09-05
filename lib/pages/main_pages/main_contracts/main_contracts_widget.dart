@@ -17,8 +17,9 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 class MainContractsWidget extends StatefulWidget {
   final String? tipo_acesso;
   final int? usuariocodigo;
+  final int? codigo_departamento_fornecedor;
 
-  const MainContractsWidget({super.key, this.usuariocodigo, this.tipo_acesso});
+  const MainContractsWidget({super.key, this.usuariocodigo, this.tipo_acesso, this.codigo_departamento_fornecedor});
 
   @override
   State<MainContractsWidget> createState() => _MainContractsWidgetState();
@@ -59,13 +60,28 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
 
   // Função para carregar pedidos da API e atualizar o estado
   Future<void> loadPedidos() async {
-    var uri = Uri.parse(
-        "http://192.168.100.6/np3beneficios_appphp/api/pedidos/busca_pedidos.php?codigo_usuario=${widget.usuariocodigo}&tipo_acesso=${widget.tipo_acesso}");
-    var resposta = await http.get(uri, headers: {"Accept": "application/json"});
-    List<dynamic> data = json.decode(resposta.body);
-    setState(() {
-      pedidos = List<Map<String, dynamic>>.from(data);
-    });
+
+    if(widget.tipo_acesso == "gestor")
+    {
+      var uri = Uri.parse(
+        "http://192.168.15.200/np3beneficios_appphp/api/pedidos/busca_pedidos.php?codigo_usuario=${widget.usuariocodigo}&tipo_acesso=${widget.tipo_acesso}");
+      var resposta = await http.get(uri, headers: {"Accept": "application/json"});
+      List<dynamic> data = json.decode(resposta.body);
+
+      setState(() {
+        pedidos = List<Map<String, dynamic>>.from(data);
+      });
+    }else{
+      var uri = Uri.parse(
+        "http://192.168.15.200/np3beneficios_appphp/api/pedidos/busca_pedidos.php?codigo_usuario=${widget.usuariocodigo}&tipo_acesso=${widget.tipo_acesso}&codigo_fornecedor_departamento=${widget.codigo_departamento_fornecedor}");
+      var resposta = await http.get(uri, headers: {"Accept": "application/json"});
+
+      List<dynamic> data = json.decode(resposta.body);
+
+      setState(() {
+          pedidos = List<Map<String, dynamic>>.from(data);
+      });
+    }
   }
 
   Future<void> LerPedido() async {
@@ -128,7 +144,7 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
                 backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
                 automaticallyImplyLeading: false,
                 title: Text(
-                  "Pedidos",
+                  "Pedidos - ${widget.tipo_acesso}",
                   style: FlutterFlowTheme.of(context).displaySmall.override(
                         fontFamily: 'Outfit',
                         letterSpacing: 0.0,
@@ -143,10 +159,26 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
           children: [
             Expanded(
               child: ListView.builder(
+                
                 padding: const EdgeInsets.fromLTRB(0, 12, 0, 44),
                 itemCount: itemsOnPage.length,
                 itemBuilder: (context, index) {
                   final item = itemsOnPage[index];
+                  String status = item["estado_pedido"];
+                  Color statusColor;
+                  switch (status) {
+                    case 'Pendente':
+                      statusColor = Colors.red;
+                      break;
+                    case 'Em Andamento':
+                      statusColor = Colors.blue;
+                      break;
+                    case 'Concluído':
+                      statusColor = Colors.green;
+                      break;
+                    default:
+                      statusColor = Colors.blue;
+                  }
 
                   return Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 12.0),
@@ -197,23 +229,22 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
                               ),
                               Text(
                                 'Valor Cotação: ${item['valor_total_cotacao']}',
-                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: Theme.of(context).primaryColor,
-                                    ),
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
+                              SizedBox(height: 16.0),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'Status: ${item['estado_pedido']}',
-                                    style: Theme.of(context).textTheme.bodyLarge,
+                                    'Status: ${status}',
+                                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: statusColor),
                                   ),
                                   InkWell(
                                     onTap: () {
                                       LerPedido();
                                     },
                                     child: Container(
-                                      height: 32.0,
+                                      height: 45.0,
                                       decoration: BoxDecoration(
                                         color: Theme.of(context).colorScheme.secondary,
                                         borderRadius: BorderRadius.circular(12.0),
@@ -240,26 +271,57 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
                               Text(
-                                'Descrição: ${item['descricao']}',
+                                'Descrição: ${item['descricaopedido']}',
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               Text(
-                                'Data: ${item['data']}',
+                                'Data: ${item['dt_pedido']}',
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
                               Text(
-                                'Status: ${item['status']}',
+                                'Status: ${status}',
+                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: statusColor),
+                              ),
+                              // Text(
+                              //   'Valor Pedido: ${item['valor_pedido']}',
+                              //   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              //         color: Theme.of(context).primaryColor,
+                              //       ),
+                              // ),
+                              Text(
+                                'Valor Cotação: ${item['valor_total_cotacao']}',
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
-                              Text(
-                                'Valor Pedido: ${item['valor_pedido']}',
-                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: Theme.of(context).primaryColor,
+                              SizedBox(height: 16.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  
+                                  InkWell(
+                                    onTap: () {
+                                      LerPedido();
+                                    },
+                                    child: Container(
+                                      height: 45.0,
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).colorScheme.secondary,
+                                        borderRadius: BorderRadius.circular(12.0),
+                                        border: Border.all(
+                                          color: Theme.of(context).primaryColor,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                      alignment: AlignmentDirectional.center,
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                                        child: Text(
+                                          'Entregar',
+                                          style: Theme.of(context).textTheme.bodyLarge,
+                                        ),
+                                      ),
                                     ),
-                              ),
-                              Text(
-                                'Valor Cotação: ${item['valor_cotacao']}',
-                                style: Theme.of(context).textTheme.bodyLarge,
+                                  ),
+                                ],
                               ),
                             ],
                           ],

@@ -104,7 +104,7 @@ class NavBarPage extends StatefulWidget {
   final String? tipoacesso;
   final String? nomeusuario;
   final int? usuario_codigo;
-  final int? codigo_departamento_fornecedor;
+  final String? codigo_departamento_fornecedor;
 
   @override
   _NavBarPageState createState() => _NavBarPageState();
@@ -114,7 +114,7 @@ class NavBarPage extends StatefulWidget {
 class _NavBarPageState extends State<NavBarPage> {
   String _currentPageName = 'Main_Home';
   late Widget? _currentPage;
-
+  var recebe_codigo_departamento_fornecedor = 0;
   @override
   void initState() {
     super.initState();
@@ -124,10 +124,19 @@ class _NavBarPageState extends State<NavBarPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    if(widget.codigo_departamento_fornecedor == "nada"){
+      recebe_codigo_departamento_fornecedor = 0;
+    }
+    else{
+      var recebe_valor_codigo_departamento_fornecedor = widget.codigo_departamento_fornecedor;
+      recebe_codigo_departamento_fornecedor = int.parse(recebe_valor_codigo_departamento_fornecedor!);
+    }
+
     final tabs = {
       'Main_Home': MainHomeWidget(tipoacesso: widget.tipoacesso,codigousuario: widget.usuario_codigo,nomeusuario: widget.nomeusuario,),
       //'Main_customerList': const MainCustomerListWidget(),
-      'Main_Contracts': MainContractsWidget(usuariocodigo: widget.usuario_codigo,tipo_acesso: widget.tipoacesso),
+      'Main_Contracts': MainContractsWidget(usuariocodigo: widget.usuario_codigo,tipo_acesso: widget.tipoacesso, codigo_departamento_fornecedor: recebe_codigo_departamento_fornecedor,),
       'Main_messages': const MainMessagesWidget(),
       'Main_profilePage': const MainProfilePageWidget(),
     };

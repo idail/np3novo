@@ -345,7 +345,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
 
   Future<void> logar(String usuario, String senha) async {
     var uri = Uri.parse(
-        "http://192.168.100.6/np3beneficios_appphp/api/autenticacao/autenticacao.php?usuario=$usuario&senha=$senha");
+        "http://192.168.15.200/np3beneficios_appphp/api/autenticacao/autenticacao.php?usuario=$usuario&senha=$senha");
     var resposta = await http.get(uri, headers: {"Accept": "application/json"});
     print(resposta.body);
     var retorno = jsonDecode(resposta.body);
@@ -353,7 +353,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
     if(retorno == "nenhum usuario localizado"){
       //mostrarAlerta("Informação", "Favor verificar os dados preenchidos");
     }else{
-    int codigo_departamento_fornecedor;
+    String codigo_departamento_fornecedor;
     var nome_grupo = retorno["nome_grupo_usuario"];
     var nome_usuario = retorno["nome"];
     var login_usuario = retorno["login_usuario"];
@@ -362,10 +362,10 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
 
     if (retorno["codigo_departamento_fornecedor"] != null &&
         retorno["codigo_departamento_fornecedor"].toString().isNotEmpty) {
-      codigo_departamento_fornecedor = int.parse(retorno["codigo_departamento_fornecedor"]);
+      codigo_departamento_fornecedor = retorno["codigo_departamento_fornecedor"].toString();
       print(codigo_departamento_fornecedor);
     }else{
-      codigo_departamento_fornecedor = 0;
+      codigo_departamento_fornecedor = "nada";
     }
 
     var email_usuario = "";
@@ -376,11 +376,20 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
     try {
        String tipoAcesso = await verificaLogin(nome_grupo);
 
-      //MyApp(perfilacesso:tipoAcesso);
-      //AppStateNotifier();
-      //NavBarPage();
+       // Define os parâmetros obrigatórios
+      // Define os parâmetros obrigatórios como String
+      var pathParameters = <String, String>{
+        "tipoacesso": tipoAcesso,
+        "nomeusuario": nome_usuario,
+        "usuario_codigo": codigo_usuario,
+      };
 
-      context.pushNamed('Main_Home',pathParameters: {"tipoacesso":tipoAcesso,"nomeusuario":nome_usuario,"usuario_codigo":codigo_usuario});
+      // Adiciona o parâmetro opcional somente se houver valor, garantindo que seja String
+      if (codigo_departamento_fornecedor != "" && codigo_departamento_fornecedor.isNotEmpty) {
+        pathParameters["codigo_departamento_fornecedor"] = codigo_departamento_fornecedor;
+      }
+
+      context.pushNamed('Main_Home',pathParameters: pathParameters);
 
       // if (tipoAcesso == "gestor") {
       //   Navigator.pushReplacement(

@@ -75,9 +75,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ),
         FFRoute(
           name: 'Main_Home',
-          path: '/mainHome/:tipoacesso/:nomeusuario/:usuario_codigo',
+          path: '/mainHome/:tipoacesso/:nomeusuario/:usuario_codigo/:codigo_departamento_fornecedor',
           builder: (context, params) => NavBarPage(initialPage: 'Main_Home',tipoacesso: params.getParam('tipoacesso', ParamType.String), 
-              nomeusuario:params.getParam("nomeusuario", ParamType.String),usuario_codigo:params.getParam("usuario_codigo", ParamType.int)),
+              nomeusuario:params.getParam("nomeusuario", ParamType.String),usuario_codigo:params.getParam("usuario_codigo", ParamType.int),
+              codigo_departamento_fornecedor: params.getParam('codigo_departamento_fornecedor', ParamType.String)),
         ),
         FFRoute(
           name: 'Main_customerList',
@@ -88,9 +89,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ),
         FFRoute(
           name: 'Main_Contracts',
-          path: '/mainContracts/:tipoacesso/:usuario_codigo',
+          path: '/mainContracts/:tipoacesso/:nomeusuario/:usuario_codigo/:codigo_departamento_fornecedor',
           builder: (context, params) => NavBarPage(initialPage: 'Main_Contracts',tipoacesso: params.getParam("tipoacesso", ParamType.String),
-          usuario_codigo: params.getParam("usuario_codigo", ParamType.int),),
+          nomeusuario: params.getParam("nomeusuario", ParamType.String), usuario_codigo: params.getParam("usuario_codigo", ParamType.int),
+          codigo_departamento_fornecedor: params.getParam("codigo_departamento_fornecedor", ParamType.String)),
         ),
         FFRoute(
           name: 'Main_messages',
