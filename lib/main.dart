@@ -153,13 +153,13 @@ class _NavBarPageState extends State<NavBarPage> {
           showSelectedLabels: true,
           showUnselectedLabels: true,
           type: BottomNavigationBarType.fixed,
-          items: <BottomNavigationBarItem>[
+          items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: const Icon(
+              icon: Icon(
                 Icons.dashboard_outlined,
                 size: 24.0,
               ),
-              activeIcon: const Icon(
+              activeIcon: Icon(
                 Icons.dashboard_rounded,
                 size: 32.0,
               ),
@@ -183,11 +183,11 @@ class _NavBarPageState extends State<NavBarPage> {
             //   tooltip: '',
             // ),
             BottomNavigationBarItem(
-              icon: const Icon(
+              icon: Icon(
                 Icons.receipt,
                 size: 24.0,
               ),
-              activeIcon: const Icon(
+              activeIcon: Icon(
                 Icons.receipt,
                 size: 32.0,
               ),
@@ -197,11 +197,11 @@ class _NavBarPageState extends State<NavBarPage> {
               tooltip: '',
             ),
             BottomNavigationBarItem(
-              icon: const Icon(
+              icon: Icon(
                 Icons.map,
                 size: 24.0,
               ),
-              activeIcon: const Icon(
+              activeIcon: Icon(
                 Icons.map,
                 size: 24.0,
               ),
@@ -209,11 +209,11 @@ class _NavBarPageState extends State<NavBarPage> {
               tooltip: '',
             ),
             BottomNavigationBarItem(
-              icon: const Icon(
+              icon: Icon(
                 Icons.account_circle_outlined,
                 size: 24.0,
               ),
-              activeIcon: const Icon(
+              activeIcon: Icon(
                 Icons.account_circle,
                 size: 32.0,
               ),

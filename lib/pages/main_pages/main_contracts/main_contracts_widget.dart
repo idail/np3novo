@@ -12,10 +12,12 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'main_contracts_model.dart';
 export 'main_contracts_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class MainContractsWidget extends StatefulWidget {
   final String? tipo_acesso;
   final int? usuariocodigo;
+
   const MainContractsWidget({super.key, this.usuariocodigo, this.tipo_acesso});
 
   @override
@@ -31,7 +33,7 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
   // Variáveis para armazenar os pedidos e o estado da paginação
   List<Map<String, dynamic>> pedidos = [];
   int currentPage = 0;
-
+  String texto = '';
   @override
   void initState() {
     super.initState();
@@ -58,12 +60,53 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
   // Função para carregar pedidos da API e atualizar o estado
   Future<void> loadPedidos() async {
     var uri = Uri.parse(
-        "http://192.168.15.200/np3beneficios_appphp/api/pedidos/busca_pedidos.php?codigo_usuario=${widget.usuariocodigo}&tipo_acesso=${widget.tipo_acesso}");
+        "http://192.168.100.6/np3beneficios_appphp/api/pedidos/busca_pedidos.php?codigo_usuario=${widget.usuariocodigo}&tipo_acesso=${widget.tipo_acesso}");
     var resposta = await http.get(uri, headers: {"Accept": "application/json"});
     List<dynamic> data = json.decode(resposta.body);
     setState(() {
       pedidos = List<Map<String, dynamic>>.from(data);
     });
+  }
+
+  Future<void> LerPedido() async {
+    String code = await FlutterBarcodeScanner.scanBarcode(
+      "#FFFFFF",
+      "Cancelar",
+      false,
+      ScanMode.QR,
+    );
+
+    if (code != '-1') {
+      setState(() {
+        texto = code;
+        mostrarAlerta("Informação", texto);
+      });
+    } else {
+      setState(() {
+        texto = 'Leitura de QR Code cancelada';
+        print(texto);
+      });
+    }
+  }
+
+  void mostrarAlerta(String titulo, String mensagem) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(titulo),
+          content: Text(mensagem),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -104,6 +147,7 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
                 itemCount: itemsOnPage.length,
                 itemBuilder: (context, index) {
                   final item = itemsOnPage[index];
+
                   return Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 12.0),
                     child: AnimatedContainer(
@@ -134,61 +178,90 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Código: ${item['id']}', // Código do pedido
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                            Text(
-                              'Descrição: ${item['descricaopedido']}', // Descrição do pedido
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            Text(
-                              'Email: idaillopes@gmail.com', // Email do cliente
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            Text(
-                              'Data: ${item['dt_pedido']}', // Data do pedido
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                            Text(
-                              'Valor Cotação: ${item['valor_total_cotacao']}', // Valor da cotação
-                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    color: Theme.of(context).primaryColor,
+                            if (widget.tipo_acesso == 'gestor') ...[
+                              Text(
+                                'Código: ${item['id']}',
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                              Text(
+                                'Descrição: ${item['descricaopedido']}',
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              Text(
+                                'Email: ${item['email_usuario']}',
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                              Text(
+                                'Data: ${item['dt_pedido']}',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                              Text(
+                                'Valor Cotação: ${item['valor_total_cotacao']}',
+                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Status: ${item['estado_pedido']}',
+                                    style: Theme.of(context).textTheme.bodyLarge,
                                   ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Status: ${item['estado_pedido']}', // Status do pedido
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    // Ação ao clicar no botão "Entregar"
-                                  },
-                                  child: Container(
-                                    height: 32.0,
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context).colorScheme.secondary,
-                                      borderRadius: BorderRadius.circular(12.0),
-                                      border: Border.all(
-                                        color: Theme.of(context).primaryColor,
-                                        width: 2.0,
+                                  InkWell(
+                                    onTap: () {
+                                      LerPedido();
+                                    },
+                                    child: Container(
+                                      height: 32.0,
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).colorScheme.secondary,
+                                        borderRadius: BorderRadius.circular(12.0),
+                                        border: Border.all(
+                                          color: Theme.of(context).primaryColor,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                      alignment: AlignmentDirectional.center,
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                                        child: Text(
+                                          'Entregar',
+                                          style: Theme.of(context).textTheme.bodyLarge,
+                                        ),
                                       ),
                                     ),
-                                    alignment: AlignmentDirectional.center,
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                                      child: Text(
-                                        'Entregar', // Texto do botão
-                                        style: Theme.of(context).textTheme.bodyLarge,
-                                      ),
-                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
+                                ],
+                              ),
+                            ] else if (widget.tipo_acesso == 'fornecedor') ...[
+                              Text(
+                                'Código: ${item['id']}',
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                              Text(
+                                'Descrição: ${item['descricao']}',
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              Text(
+                                'Data: ${item['data']}',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                              Text(
+                                'Status: ${item['status']}',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                              Text(
+                                'Valor Pedido: ${item['valor_pedido']}',
+                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                              ),
+                              Text(
+                                'Valor Cotação: ${item['valor_cotacao']}',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ],
                           ],
                         ),
                       ),
