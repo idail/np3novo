@@ -98,7 +98,8 @@ class _MyAppState extends State<MyApp> {
 }
 
 class NavBarPage extends StatefulWidget {
-  NavBarPage({super.key, this.initialPage, this.page, this.tipoacesso, this.nomeusuario, this.usuario_codigo, this.codigo_departamento_fornecedor, this.login_usuario , this.email_usuario});
+  NavBarPage({super.key, this.initialPage, this.page, this.tipoacesso, this.nomeusuario, this.usuario_codigo, 
+  this.codigo_departamento_fornecedor, this.login_usuario , this.email_usuario, this.departamentos_gestor});
 
   final String? initialPage;
   final Widget? page;
@@ -108,6 +109,7 @@ class NavBarPage extends StatefulWidget {
   final String? codigo_departamento_fornecedor;
   final String? login_usuario;
   final String? email_usuario;
+  final String? departamentos_gestor;
 
   @override
   _NavBarPageState createState() => _NavBarPageState();
@@ -140,7 +142,8 @@ class _NavBarPageState extends State<NavBarPage> {
       'Main_Home': MainHomeWidget(tipoacesso: widget.tipoacesso,codigousuario: widget.usuario_codigo,nomeusuario: widget.nomeusuario,),
       //'Main_customerList': const MainCustomerListWidget(),
       'Main_Contracts': MainContractsWidget(usuariocodigo: widget.usuario_codigo,tipo_acesso: widget.tipoacesso, 
-      codigo_departamento_fornecedor: recebe_codigo_departamento_fornecedor,email_usuario: widget.email_usuario,login_usuario:widget.login_usuario , nome_usuario: widget.nomeusuario,),
+      codigo_departamento_fornecedor: recebe_codigo_departamento_fornecedor,email_usuario: widget.email_usuario,login_usuario:widget.login_usuario , nome_usuario: widget.nomeusuario,
+      departamentos_gestor:widget.departamentos_gestor),
       'Main_messages': const MainMessagesWidget(),
       'Main_profilePage': const MainProfilePageWidget(),
     };
