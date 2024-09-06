@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import '/components/modal_sections/modal_project_details/modal_project_details_widget.dart';
 import '/components/modals/command_palette/command_palette_widget.dart';
@@ -18,8 +19,11 @@ class MainContractsWidget extends StatefulWidget {
   final String? tipo_acesso;
   final int? usuariocodigo;
   final int? codigo_departamento_fornecedor;
+  final String? email_usuario;
+  final String? login_usuario;
+  final String? nome_usuario;
 
-  const MainContractsWidget({super.key, this.usuariocodigo, this.tipo_acesso, this.codigo_departamento_fornecedor});
+  const MainContractsWidget({super.key, this.usuariocodigo, this.tipo_acesso, this.codigo_departamento_fornecedor , this.email_usuario , this.login_usuario , this.nome_usuario});
 
   @override
   State<MainContractsWidget> createState() => _MainContractsWidgetState();
@@ -64,7 +68,7 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
     if(widget.tipo_acesso == "gestor")
     {
       var uri = Uri.parse(
-        "http://192.168.15.200/np3beneficios_appphp/api/pedidos/busca_pedidos.php?codigo_usuario=${widget.usuariocodigo}&tipo_acesso=${widget.tipo_acesso}");
+        "http://192.168.100.6/np3beneficios_appphp/api/pedidos/busca_pedidos.php?codigo_usuario=${widget.usuariocodigo}&tipo_acesso=${widget.tipo_acesso}");
       var resposta = await http.get(uri, headers: {"Accept": "application/json"});
       List<dynamic> data = json.decode(resposta.body);
 
@@ -73,7 +77,7 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
       });
     }else{
       var uri = Uri.parse(
-        "http://192.168.15.200/np3beneficios_appphp/api/pedidos/busca_pedidos.php?codigo_usuario=${widget.usuariocodigo}&tipo_acesso=${widget.tipo_acesso}&codigo_fornecedor_departamento=${widget.codigo_departamento_fornecedor}");
+        "http://192.168.100.6/np3beneficios_appphp/api/pedidos/busca_pedidos.php?codigo_usuario=${widget.usuariocodigo}&tipo_acesso=${widget.tipo_acesso}&codigo_fornecedor_departamento=${widget.codigo_departamento_fornecedor}");
       var resposta = await http.get(uri, headers: {"Accept": "application/json"});
 
       List<dynamic> data = json.decode(resposta.body);
@@ -180,6 +184,19 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
                       statusColor = Colors.blue;
                   }
 
+                  DateTime data = DateTime.parse(item['dt_pedido']);
+                  String dataFormatadaBR = DateFormat('dd/MM/yyyy').format(data);
+
+                  String? recebeEmail = "";
+                  
+                  if(widget.email_usuario != "nada"){
+                    recebeEmail = widget.email_usuario;
+                  }
+
+                  String? recebeNomeUsuario = widget.nome_usuario;
+
+                  String? recebeLoginUsuario = widget.login_usuario;
+
                   return Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 12.0),
                     child: AnimatedContainer(
@@ -191,7 +208,8 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
                         maxWidth: 770.0,
                       ),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).secondaryHeaderColor,
+                        color: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
                         boxShadow: const [
                           BoxShadow(
                             blurRadius: 3.0,
@@ -201,7 +219,8 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
                         ],
                         borderRadius: BorderRadius.circular(12.0),
                         border: Border.all(
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
                           width: 1.0,
                         ),
                       ),
@@ -213,25 +232,24 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
                             if (widget.tipo_acesso == 'gestor') ...[
                               Text(
                                 'Código: ${item['id']}',
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                              Text(
-                                'Descrição: ${item['descricaopedido']}',
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              Text(
-                                'Email: ${item['email_usuario']}',
                                 style: Theme.of(context).textTheme.titleSmall,
                               ),
                               Text(
-                                'Data: ${item['dt_pedido']}',
+                                'Descrição: ${item['descricaopedido']}',
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                              Text(
+                                'Nome: $recebeNomeUsuario',
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                              Text(
+                                'Data: $dataFormatadaBR',
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
                               Text(
-                                'Valor Cotação: ${item['valor_total_cotacao']}',
+                                'Valor Cotação: R\$${item['valor_total_cotacao']}',
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
-                              SizedBox(height: 16.0),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -275,13 +293,17 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               Text(
-                                'Data: ${item['dt_pedido']}',
+                                'Usuário: $recebeLoginUsuario',
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
                               Text(
-                                'Status: ${status}',
-                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: statusColor),
+                                'Data: $dataFormatadaBR',
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
+                              // Text(
+                              //   'Status: ${status}',
+                              //   style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: statusColor),
+                              // ),
                               // Text(
                               //   'Valor Pedido: ${item['valor_pedido']}',
                               //   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -292,11 +314,14 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
                                 'Valor Cotação: ${item['valor_total_cotacao']}',
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
-                              SizedBox(height: 16.0),
+                              
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  
+                                  Text(
+                                    'Status: ${status}',
+                                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: statusColor),
+                                  ),
                                   InkWell(
                                     onTap: () {
                                       LerPedido();

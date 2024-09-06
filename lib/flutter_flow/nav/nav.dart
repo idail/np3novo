@@ -75,10 +75,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ),
         FFRoute(
           name: 'Main_Home',
-          path: '/mainHome/:tipoacesso/:nomeusuario/:usuario_codigo/:codigo_departamento_fornecedor',
+          path: '/mainHome/:tipoacesso/:nomeusuario/:usuario_codigo/:codigo_departamento_fornecedor/:login_usuario/:email_usuario',
           builder: (context, params) => NavBarPage(initialPage: 'Main_Home',tipoacesso: params.getParam('tipoacesso', ParamType.String), 
               nomeusuario:params.getParam("nomeusuario", ParamType.String),usuario_codigo:params.getParam("usuario_codigo", ParamType.int),
-              codigo_departamento_fornecedor: params.getParam('codigo_departamento_fornecedor', ParamType.String)),
+              codigo_departamento_fornecedor: params.getParam('codigo_departamento_fornecedor', ParamType.String),
+              login_usuario: params.getParam("login_usuario", ParamType.String), email_usuario: params.getParam("email_usuario", ParamType.String)),
         ),
         FFRoute(
           name: 'Main_customerList',
@@ -89,10 +90,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ),
         FFRoute(
           name: 'Main_Contracts',
-          path: '/mainContracts/:tipoacesso/:nomeusuario/:usuario_codigo/:codigo_departamento_fornecedor',
+          path: '/mainContracts/:tipoacesso/:nomeusuario/:usuario_codigo/:codigo_departamento_fornecedor/:login_usuario/:email_usuario',
           builder: (context, params) => NavBarPage(initialPage: 'Main_Contracts',tipoacesso: params.getParam("tipoacesso", ParamType.String),
           nomeusuario: params.getParam("nomeusuario", ParamType.String), usuario_codigo: params.getParam("usuario_codigo", ParamType.int),
-          codigo_departamento_fornecedor: params.getParam("codigo_departamento_fornecedor", ParamType.String)),
+          codigo_departamento_fornecedor: params.getParam("codigo_departamento_fornecedor", ParamType.String),
+          login_usuario: params.getParam("login_usuario", ParamType.String), email_usuario: params.getParam("email_usuario", ParamType.String)),
         ),
         FFRoute(
           name: 'Main_messages',

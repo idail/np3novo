@@ -65,6 +65,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'np3novo',
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
         FFLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
@@ -97,7 +98,7 @@ class _MyAppState extends State<MyApp> {
 }
 
 class NavBarPage extends StatefulWidget {
-  NavBarPage({super.key, this.initialPage, this.page, this.tipoacesso, this.nomeusuario, this.usuario_codigo, this.codigo_departamento_fornecedor});
+  NavBarPage({super.key, this.initialPage, this.page, this.tipoacesso, this.nomeusuario, this.usuario_codigo, this.codigo_departamento_fornecedor, this.login_usuario , this.email_usuario});
 
   final String? initialPage;
   final Widget? page;
@@ -105,6 +106,8 @@ class NavBarPage extends StatefulWidget {
   final String? nomeusuario;
   final int? usuario_codigo;
   final String? codigo_departamento_fornecedor;
+  final String? login_usuario;
+  final String? email_usuario;
 
   @override
   _NavBarPageState createState() => _NavBarPageState();
@@ -136,7 +139,8 @@ class _NavBarPageState extends State<NavBarPage> {
     final tabs = {
       'Main_Home': MainHomeWidget(tipoacesso: widget.tipoacesso,codigousuario: widget.usuario_codigo,nomeusuario: widget.nomeusuario,),
       //'Main_customerList': const MainCustomerListWidget(),
-      'Main_Contracts': MainContractsWidget(usuariocodigo: widget.usuario_codigo,tipo_acesso: widget.tipoacesso, codigo_departamento_fornecedor: recebe_codigo_departamento_fornecedor,),
+      'Main_Contracts': MainContractsWidget(usuariocodigo: widget.usuario_codigo,tipo_acesso: widget.tipoacesso, 
+      codigo_departamento_fornecedor: recebe_codigo_departamento_fornecedor,email_usuario: widget.email_usuario,login_usuario:widget.login_usuario , nome_usuario: widget.nomeusuario,),
       'Main_messages': const MainMessagesWidget(),
       'Main_profilePage': const MainProfilePageWidget(),
     };

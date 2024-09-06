@@ -345,7 +345,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
 
   Future<void> logar(String usuario, String senha) async {
     var uri = Uri.parse(
-        "http://192.168.15.200/np3beneficios_appphp/api/autenticacao/autenticacao.php?usuario=$usuario&senha=$senha");
+        "http://192.168.100.6/np3beneficios_appphp/api/autenticacao/autenticacao.php?usuario=$usuario&senha=$senha");
     var resposta = await http.get(uri, headers: {"Accept": "application/json"});
     print(resposta.body);
     var retorno = jsonDecode(resposta.body);
@@ -372,6 +372,8 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
 
     if(retorno["email_usuario"].toString().isNotEmpty && retorno["email_usuario"] != null)
       email_usuario = retorno["email_usuario"];
+    else
+      email_usuario = "nada";
 
     try {
        String tipoAcesso = await verificaLogin(nome_grupo);
@@ -388,6 +390,9 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
       if (codigo_departamento_fornecedor != "" && codigo_departamento_fornecedor.isNotEmpty) {
         pathParameters["codigo_departamento_fornecedor"] = codigo_departamento_fornecedor;
       }
+
+      pathParameters["login_usuario"] = login_usuario;
+      pathParameters["email_usuario"] = email_usuario;
 
       context.pushNamed('Main_Home',pathParameters: pathParameters);
 
