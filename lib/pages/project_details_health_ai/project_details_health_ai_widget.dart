@@ -29,8 +29,8 @@ class _ProjectDetailsHealthAiWidgetState
     super.initState();
     _model = createModel(context, () => ProjectDetailsHealthAiModel());
 
-    logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'projectDetailsHealthAi'});
+    // logFirebaseEvent('screen_view',
+    //     parameters: {'screen_name': 'projectDetailsHealthAi'});
     animationsMap.addAll({
       'containerOnPageLoadAnimation1': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
@@ -170,7 +170,7 @@ class _ProjectDetailsHealthAiWidgetState
               size: 30.0,
             ),
             onPressed: () async {
-              logFirebaseEvent('PROJECT_DETAILS_HEALTH_AI_arrow_back_rou');
+              // logFirebaseEvent('PROJECT_DETAILS_HEALTH_AI_arrow_back_rou');
               context.pop();
             },
           ),

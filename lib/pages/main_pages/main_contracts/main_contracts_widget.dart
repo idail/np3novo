@@ -45,7 +45,7 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => MainContractsModel());
-    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Main_Contracts'});
+    // logFirebaseEvent('screen_view', parameters: {'screen_name': 'Main_Contracts'});
     animationsMap.addAll({
       // Animations...
     });

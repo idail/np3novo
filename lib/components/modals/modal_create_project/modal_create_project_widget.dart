@@ -197,8 +197,8 @@ class _ModalCreateProjectWidgetState extends State<ModalCreateProjectWidget>
                                     size: 30.0,
                                   ),
                                   onPressed: () async {
-                                    logFirebaseEvent(
-                                        'MODAL_CREATE_PROJECT_close_rounded_ICN_O');
+                                    // logFirebaseEvent(
+                                    //     'MODAL_CREATE_PROJECT_close_rounded_ICN_O');
                                     Navigator.pop(context);
                                   },
                                 ),

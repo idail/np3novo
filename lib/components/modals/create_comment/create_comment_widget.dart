@@ -228,8 +228,8 @@ class _CreateCommentWidgetState extends State<CreateCommentWidget> {
                                   0.0, 16.0, 0.0, 44.0),
                               child: FFButtonWidget(
                                 onPressed: () async {
-                                  logFirebaseEvent(
-                                      'CREATE_COMMENT_CREATE_NOTE_BTN_ON_TAP');
+                                  // logFirebaseEvent(
+                                  //     'CREATE_COMMENT_CREATE_NOTE_BTN_ON_TAP');
                                   context.pop();
                                 },
                                 text: FFLocalizations.of(context).getText(

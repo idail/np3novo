@@ -363,8 +363,8 @@ class _UserDetailsMainWidgetState extends State<UserDetailsMainWidget>
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  logFirebaseEvent(
-                                      'USER_DETAILS_MAIN_Card_xvm62zsz_ON_TAP');
+                                  // logFirebaseEvent(
+                                  //     'USER_DETAILS_MAIN_Card_xvm62zsz_ON_TAP');
                                   context.safePop();
                                 },
                                 child: Card(
@@ -699,8 +699,8 @@ class _UserDetailsMainWidgetState extends State<UserDetailsMainWidget>
                                         size: 20.0,
                                       ),
                                       onPressed: () async {
-                                        logFirebaseEvent(
-                                            'USER_DETAILS_MAIN_add_rounded_ICN_ON_TAP');
+                                        // logFirebaseEvent(
+                                        //     'USER_DETAILS_MAIN_add_rounded_ICN_ON_TAP');
                                         await showModalBottomSheet(
                                           isScrollControlled: true,
                                           backgroundColor: Colors.transparent,
@@ -976,8 +976,8 @@ class _UserDetailsMainWidgetState extends State<UserDetailsMainWidget>
                 Expanded(
                   child: FFButtonWidget(
                     onPressed: () async {
-                      logFirebaseEvent(
-                          'USER_DETAILS_MAIN_GENERATE_QUOTE_BTN_ON_');
+                      // logFirebaseEvent(
+                      //     'USER_DETAILS_MAIN_GENERATE_QUOTE_BTN_ON_');
                       showModalBottomSheet(
                         isScrollControlled: true,
                         backgroundColor: Colors.transparent,

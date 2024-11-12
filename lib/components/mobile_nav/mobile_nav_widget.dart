@@ -79,7 +79,7 @@ class _MobileNavWidgetState extends State<MobileNavWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  logFirebaseEvent('MOBILE_NAV_COMP_Column_5op2fdni_ON_TAP');
+                  // logFirebaseEvent('MOBILE_NAV_COMP_Column_5op2fdni_ON_TAP');
 
                   context.pushNamed(
                     'Main_Home',
@@ -122,7 +122,7 @@ class _MobileNavWidgetState extends State<MobileNavWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  logFirebaseEvent('MOBILE_NAV_COMP_Column_5root8xc_ON_TAP');
+                  // logFirebaseEvent('MOBILE_NAV_COMP_Column_5root8xc_ON_TAP');
 
                   context.pushNamed(
                     'Main_customerList',
@@ -165,7 +165,7 @@ class _MobileNavWidgetState extends State<MobileNavWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  logFirebaseEvent('MOBILE_NAV_COMP_Column_yvpwce9x_ON_TAP');
+                  // logFirebaseEvent('MOBILE_NAV_COMP_Column_yvpwce9x_ON_TAP');
 
                   context.pushNamed(
                     'Main_Contracts',
@@ -208,7 +208,7 @@ class _MobileNavWidgetState extends State<MobileNavWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  logFirebaseEvent('MOBILE_NAV_COMP_Column_rda41op2_ON_TAP');
+                  // logFirebaseEvent('MOBILE_NAV_COMP_Column_rda41op2_ON_TAP');
 
                   context.pushNamed(
                     'Main_profilePage',

@@ -22,7 +22,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
     super.initState();
     _model = createModel(context, () => EditProfileModel());
 
-    logFirebaseEvent('screen_view', parameters: {'screen_name': 'editProfile'});
+    // logFirebaseEvent('screen_view', parameters: {'screen_name': 'editProfile'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -52,7 +52,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
             size: 30.0,
           ),
           onPressed: () async {
-            logFirebaseEvent('EDIT_PROFILE_arrow_back_rounded_ICN_ON_T');
+            // logFirebaseEvent('EDIT_PROFILE_arrow_back_rounded_ICN_ON_T');
             context.pop();
           },
         ),

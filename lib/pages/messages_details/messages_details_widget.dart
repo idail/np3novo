@@ -23,8 +23,8 @@ class _MessagesDetailsWidgetState extends State<MessagesDetailsWidget> {
     super.initState();
     _model = createModel(context, () => MessagesDetailsModel());
 
-    logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'messagesDetails'});
+    // logFirebaseEvent('screen_view',
+    //     parameters: {'screen_name': 'messagesDetails'});
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
 
@@ -59,7 +59,7 @@ class _MessagesDetailsWidgetState extends State<MessagesDetailsWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              logFirebaseEvent('MESSAGES_DETAILS_arrow_back_rounded_ICN_');
+              // logFirebaseEvent('MESSAGES_DETAILS_arrow_back_rounded_ICN_');
               context.pop();
             },
           ),

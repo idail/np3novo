@@ -564,8 +564,8 @@ class _ModalProfileEditWidgetState extends State<ModalProfileEditWidget>
                           alignment: const AlignmentDirectional(0.0, 0.05),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              logFirebaseEvent(
-                                  'MODAL_PROFILE_EDIT_CANCEL_BTN_ON_TAP');
+                              // logFirebaseEvent(
+                              //     'MODAL_PROFILE_EDIT_CANCEL_BTN_ON_TAP');
                               Navigator.pop(context);
                             },
                             text: FFLocalizations.of(context).getText(
@@ -607,8 +607,8 @@ class _ModalProfileEditWidgetState extends State<ModalProfileEditWidget>
                           alignment: const AlignmentDirectional(0.0, 0.05),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              logFirebaseEvent(
-                                  'MODAL_PROFILE_EDIT_SAVE_CHANGES_BTN_ON_T');
+                              // logFirebaseEvent(
+                              //     'MODAL_PROFILE_EDIT_SAVE_CHANGES_BTN_ON_T');
                               context.pop();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(

@@ -22,8 +22,8 @@ class _MainCustomerListWidgetState extends State<MainCustomerListWidget> {
     super.initState();
     _model = createModel(context, () => MainCustomerListModel());
 
-    logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'Main_customerList'});
+    // logFirebaseEvent('screen_view',
+    //     parameters: {'screen_name': 'Main_customerList'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 

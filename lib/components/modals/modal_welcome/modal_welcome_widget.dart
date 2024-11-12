@@ -285,8 +285,8 @@ class _ModalWelcomeWidgetState extends State<ModalWelcomeWidget>
                                     0.0, 0.0, 0.0, 12.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    logFirebaseEvent(
-                                        'MODAL_WELCOME_COMP_CONTINUE_BTN_ON_TAP');
+                                    // logFirebaseEvent(
+                                    //     'MODAL_WELCOME_COMP_CONTINUE_BTN_ON_TAP');
 
                                     context.pushNamed(
                                       'Main_Home',

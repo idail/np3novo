@@ -325,8 +325,8 @@ class _ModalSuccessWidgetState extends State<ModalSuccessWidget>
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              logFirebaseEvent(
-                                  'MODAL_SUCCESS_Container_jo79rhap_ON_TAP');
+                              // logFirebaseEvent(
+                              //     'MODAL_SUCCESS_Container_jo79rhap_ON_TAP');
 
                               context.pushNamed('userDetails');
                             },
@@ -485,8 +485,8 @@ class _ModalSuccessWidgetState extends State<ModalSuccessWidget>
                               0.0, 16.0, 0.0, 0.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              logFirebaseEvent(
-                                  'MODAL_SUCCESS_SEND_INFORMATION_BTN_ON_TA');
+                              // logFirebaseEvent(
+                              //     'MODAL_SUCCESS_SEND_INFORMATION_BTN_ON_TA');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -544,8 +544,8 @@ class _ModalSuccessWidgetState extends State<ModalSuccessWidget>
                               0.0, 16.0, 0.0, 0.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              logFirebaseEvent(
-                                  'MODAL_SUCCESS_COMP_NEVER_MIND_BTN_ON_TAP');
+                              // logFirebaseEvent(
+                              //     'MODAL_SUCCESS_COMP_NEVER_MIND_BTN_ON_TAP');
                               context.pop();
                             },
                             text: FFLocalizations.of(context).getText(

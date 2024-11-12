@@ -36,7 +36,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
     super.initState();
     _model = createModel(context, () => AuthLoginModel());
 
-    logFirebaseEvent('screen_view', parameters: {'screen_name': 'auth_Login'});
+    // logFirebaseEvent('screen_view', parameters: {'screen_name': 'auth_Login'});
     _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
 
@@ -761,8 +761,8 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
                                   // This button does the login flow
                                   FFButtonWidget(
                                     onPressed: () async {
-                                      logFirebaseEvent(
-                                          'AUTH_LOGIN_PAGE_Button-Login_ON_TAP');
+                                      // logFirebaseEvent(
+                                      //     'AUTH_LOGIN_PAGE_Button-Login_ON_TAP');
 
                                       if (usuariotext.text.isEmpty || senhatext.text.isEmpty) {
                                         mostrarAlerta("Campos obrigatórios", "Por favor, preencha o usuário e a senha.");

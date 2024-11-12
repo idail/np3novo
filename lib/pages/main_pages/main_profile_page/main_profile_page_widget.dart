@@ -32,8 +32,8 @@ class _MainProfilePageWidgetState extends State<MainProfilePageWidget>
     super.initState();
     _model = createModel(context, () => MainProfilePageModel());
 
-    logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'Main_profilePage'});
+    // logFirebaseEvent('screen_view',
+    //     parameters: {'screen_name': 'Main_profilePage'});
     animationsMap.addAll({
       'textOnPageLoadAnimation': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
@@ -202,8 +202,8 @@ class _MainProfilePageWidgetState extends State<MainProfilePageWidget>
                                           size: 30.0,
                                         ),
                                         onPressed: () async {
-                                          logFirebaseEvent(
-                                              'MAIN_PROFILE_search_rounded_ICN_ON_TAP');
+                                          // logFirebaseEvent(
+                                          //     'MAIN_PROFILE_search_rounded_ICN_ON_TAP');
                                           await showModalBottomSheet(
                                             isScrollControlled: true,
                                             backgroundColor: Colors.transparent,
@@ -695,8 +695,8 @@ class _MainProfilePageWidgetState extends State<MainProfilePageWidget>
                                                                         .transparent,
                                                                 onTap:
                                                                     () async {
-                                                                  logFirebaseEvent(
-                                                                      'MAIN_PROFILE_Container_nj6nvadb_ON_TAP');
+                                                                  // logFirebaseEvent(
+                                                                  //     'MAIN_PROFILE_Container_nj6nvadb_ON_TAP');
                                                                   setDarkModeSetting(
                                                                       context,
                                                                       ThemeMode
@@ -914,8 +914,8 @@ class _MainProfilePageWidgetState extends State<MainProfilePageWidget>
                                                                         .transparent,
                                                                 onTap:
                                                                     () async {
-                                                                  logFirebaseEvent(
-                                                                      'MAIN_PROFILE_Container_dvfw21hn_ON_TAP');
+                                                                  // logFirebaseEvent(
+                                                                  //     'MAIN_PROFILE_Container_dvfw21hn_ON_TAP');
                                                                   setDarkModeSetting(
                                                                       context,
                                                                       ThemeMode
@@ -1095,8 +1095,8 @@ class _MainProfilePageWidgetState extends State<MainProfilePageWidget>
                                     children: [
                                       FFButtonWidget(
                                         onPressed: () async {
-                                          logFirebaseEvent(
-                                              'MAIN_PROFILE_LOG_OUT_BTN_ON_TAP');
+                                          // logFirebaseEvent(
+                                          //     'MAIN_PROFILE_LOG_OUT_BTN_ON_TAP');
 
                                           context.pushNamed(
                                             'auth_Login',

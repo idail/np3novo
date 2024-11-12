@@ -122,8 +122,8 @@ class _CommandPaletteWidgetState extends State<CommandPaletteWidget>
                             size: 24.0,
                           ),
                           onPressed: () async {
-                            logFirebaseEvent(
-                                'COMMAND_PALETTE_close_rounded_ICN_ON_TAP');
+                            // logFirebaseEvent(
+                            //     'COMMAND_PALETTE_close_rounded_ICN_ON_TAP');
                             Navigator.pop(context);
                           },
                         ),
@@ -256,8 +256,8 @@ class _CommandPaletteWidgetState extends State<CommandPaletteWidget>
                                     ),
                                     FFButtonWidget(
                                       onPressed: () async {
-                                        logFirebaseEvent(
-                                            'COMMAND_PALETTE_COMP_SEARCH_BTN_ON_TAP');
+                                        // logFirebaseEvent(
+                                        //     'COMMAND_PALETTE_COMP_SEARCH_BTN_ON_TAP');
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
@@ -427,8 +427,8 @@ class _CommandPaletteWidgetState extends State<CommandPaletteWidget>
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        logFirebaseEvent(
-                                            'COMMAND_PALETTE_contentView_1_ON_TAP');
+                                        // logFirebaseEvent(
+                                        //     'COMMAND_PALETTE_contentView_1_ON_TAP');
 
                                         context.pushNamed('searchPage');
                                       },
@@ -510,8 +510,8 @@ class _CommandPaletteWidgetState extends State<CommandPaletteWidget>
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        logFirebaseEvent(
-                                            'COMMAND_PALETTE_contentView_1_ON_TAP');
+                                        // logFirebaseEvent(
+                                        //     'COMMAND_PALETTE_contentView_1_ON_TAP');
                                         Navigator.pop(context);
                                         await showModalBottomSheet(
                                           isScrollControlled: true,

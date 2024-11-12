@@ -33,8 +33,8 @@ class _MainMessagesWidgetState extends State<MainMessagesWidget>
 
     _calcularDistancia(); // Calcula a distância assim que a tela é carregada
 
-    util.logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'Main_messages'});
+    // util.logFirebaseEvent('screen_view',
+    //     parameters: {'screen_name': 'Main_messages'});
     _model.textController1 ??= TextEditingController();
     _model.textFieldFocusNode1 ??= FocusNode();
 

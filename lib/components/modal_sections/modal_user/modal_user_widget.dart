@@ -105,7 +105,7 @@ class _ModalUserWidgetState extends State<ModalUserWidget>
             hoverColor: Colors.transparent,
             highlightColor: Colors.transparent,
             onTap: () async {
-              logFirebaseEvent('MODAL_USER_COMP_Column_77mlaz9i_ON_TAP');
+              // logFirebaseEvent('MODAL_USER_COMP_Column_77mlaz9i_ON_TAP');
               Navigator.pop(context);
             },
             child: Column(
@@ -128,8 +128,8 @@ class _ModalUserWidgetState extends State<ModalUserWidget>
                         size: 20.0,
                       ),
                       onPressed: () async {
-                        logFirebaseEvent(
-                            'MODAL_USER_close_outlined_ICN_ON_TAP');
+                        // logFirebaseEvent(
+                        //     'MODAL_USER_close_outlined_ICN_ON_TAP');
                         Navigator.pop(context);
                       },
                     ).animateOnPageLoad(

@@ -92,7 +92,7 @@ class _WebNavWidgetState extends State<WebNavWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    logFirebaseEvent('WEB_NAV_COMP_bg_color_ON_TAP');
+                    // logFirebaseEvent('WEB_NAV_COMP_bg_color_ON_TAP');
                     await showModalBottomSheet(
                       isScrollControlled: true,
                       backgroundColor: Colors.transparent,
@@ -123,7 +123,7 @@ class _WebNavWidgetState extends State<WebNavWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    logFirebaseEvent('WEB_NAV_COMP_bg_color_ON_TAP');
+                    // logFirebaseEvent('WEB_NAV_COMP_bg_color_ON_TAP');
 
                     context.pushNamed(
                       'Main_Home',
@@ -191,7 +191,7 @@ class _WebNavWidgetState extends State<WebNavWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    logFirebaseEvent('WEB_NAV_COMP_bg_color_ON_TAP');
+                    // logFirebaseEvent('WEB_NAV_COMP_bg_color_ON_TAP');
 
                     context.pushNamed(
                       'Main_customerList',
@@ -259,7 +259,7 @@ class _WebNavWidgetState extends State<WebNavWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    logFirebaseEvent('WEB_NAV_COMP_bg_color_ON_TAP');
+                    // logFirebaseEvent('WEB_NAV_COMP_bg_color_ON_TAP');
 
                     context.pushNamed(
                       'Main_Contracts',
@@ -327,7 +327,7 @@ class _WebNavWidgetState extends State<WebNavWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    logFirebaseEvent('WEB_NAV_COMP_bg_color_ON_TAP');
+                    // logFirebaseEvent('WEB_NAV_COMP_bg_color_ON_TAP');
 
                     context.pushNamed(
                       'Main_messages',
@@ -395,7 +395,7 @@ class _WebNavWidgetState extends State<WebNavWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    logFirebaseEvent('WEB_NAV_COMP_bg_color_ON_TAP');
+                    // logFirebaseEvent('WEB_NAV_COMP_bg_color_ON_TAP');
 
                     context.pushNamed(
                       'Main_profilePage',

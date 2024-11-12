@@ -27,7 +27,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
     super.initState();
     _model = createModel(context, () => SearchPageModel());
 
-    logFirebaseEvent('screen_view', parameters: {'screen_name': 'searchPage'});
+    // logFirebaseEvent('screen_view', parameters: {'screen_name': 'searchPage'});
     _model.textController ??= TextEditingController();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -83,7 +83,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                   size: 24.0,
                 ),
                 onPressed: () async {
-                  logFirebaseEvent('SEARCH_arrow_back_rounded_ICN_ON_TAP');
+                  // logFirebaseEvent('SEARCH_arrow_back_rounded_ICN_ON_TAP');
                   context.pop();
                 },
               ),
@@ -204,8 +204,8 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                       '_model.textController',
                                       const Duration(milliseconds: 2000),
                                       () async {
-                                        logFirebaseEvent(
-                                            'SEARCH_TextField_ji6zqlyu_ON_TEXTFIELD_C');
+                                        // logFirebaseEvent(
+                                        //     'SEARCH_TextField_ji6zqlyu_ON_TEXTFIELD_C');
                                         safeSetState(() {
                                           _model
                                               .simpleSearchResults = TextSearch(

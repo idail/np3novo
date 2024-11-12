@@ -23,8 +23,8 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
     super.initState();
     _model = createModel(context, () => ProjectDetailsModel());
 
-    logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'projectDetails'});
+    // logFirebaseEvent('screen_view',
+    //     parameters: {'screen_name': 'projectDetails'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -56,7 +56,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              logFirebaseEvent('PROJECT_DETAILS_arrow_back_rounded_ICN_O');
+              // logFirebaseEvent('PROJECT_DETAILS_arrow_back_rounded_ICN_O');
               context.pop();
             },
           ),

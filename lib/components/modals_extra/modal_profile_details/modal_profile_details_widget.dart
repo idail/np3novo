@@ -356,8 +356,8 @@ class _ModalProfileDetailsWidgetState extends State<ModalProfileDetailsWidget>
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        logFirebaseEvent(
-                                            'MODAL_PROFILE_DETAILS_Container_5hjs8mit');
+                                        // logFirebaseEvent(
+                                        //     'MODAL_PROFILE_DETAILS_Container_5hjs8mit');
                                         setDarkModeSetting(
                                             context, ThemeMode.light);
                                       },
@@ -442,8 +442,8 @@ class _ModalProfileDetailsWidgetState extends State<ModalProfileDetailsWidget>
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        logFirebaseEvent(
-                                            'MODAL_PROFILE_DETAILS_Container_l9e5t2so');
+                                        // logFirebaseEvent(
+                                        //     'MODAL_PROFILE_DETAILS_Container_l9e5t2so');
                                         setDarkModeSetting(
                                             context, ThemeMode.dark);
                                       },

@@ -106,7 +106,7 @@ class _ModalProjectDetailsWidgetState extends State<ModalProjectDetailsWidget>
             hoverColor: Colors.transparent,
             highlightColor: Colors.transparent,
             onTap: () async {
-              logFirebaseEvent('MODAL_PROJECT_DETAILS_Column_m8ypy7lz_ON');
+              // logFirebaseEvent('MODAL_PROJECT_DETAILS_Column_m8ypy7lz_ON');
               Navigator.pop(context);
             },
             child: Column(
@@ -129,8 +129,8 @@ class _ModalProjectDetailsWidgetState extends State<ModalProjectDetailsWidget>
                         size: 20.0,
                       ),
                       onPressed: () async {
-                        logFirebaseEvent(
-                            'MODAL_PROJECT_DETAILS_close_outlined_ICN');
+                        // logFirebaseEvent(
+                        //     'MODAL_PROJECT_DETAILS_close_outlined_ICN');
                         Navigator.pop(context);
                       },
                     ).animateOnPageLoad(

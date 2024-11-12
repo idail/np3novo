@@ -27,7 +27,7 @@ class _UserDetailsWidgetState extends State<UserDetailsWidget> {
     super.initState();
     _model = createModel(context, () => UserDetailsModel());
 
-    logFirebaseEvent('screen_view', parameters: {'screen_name': 'userDetails'});
+    // logFirebaseEvent('screen_view', parameters: {'screen_name': 'userDetails'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 

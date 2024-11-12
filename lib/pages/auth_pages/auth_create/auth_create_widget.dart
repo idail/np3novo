@@ -682,8 +682,8 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
                             children: [
                               FFButtonWidget(
                                 onPressed: () async {
-                                  logFirebaseEvent(
-                                      'AUTH_CREATE_PAGE_Button-Login_ON_TAP');
+                                  // logFirebaseEvent(
+                                  //     'AUTH_CREATE_PAGE_Button-Login_ON_TAP');
                                   //GoRouter.of(context).prepareAuthEvent();
                                   if (_model.passwordTextController.text !=
                                       _model
@@ -785,8 +785,8 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
-                                    logFirebaseEvent(
-                                        'AUTH_CREATE_Container_rjk5lwv9_ON_TAP');
+                                    // logFirebaseEvent(
+                                    //     'AUTH_CREATE_Container_rjk5lwv9_ON_TAP');
                                     //GoRouter.of(context).prepareAuthEvent();
                                     // final user = await authManager
                                     //     .signInWithGoogle(context);
@@ -829,8 +829,8 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
-                                    logFirebaseEvent(
-                                        'AUTH_CREATE_Container_hmm1h1o4_ON_TAP');
+                                    // logFirebaseEvent(
+                                    //     'AUTH_CREATE_Container_hmm1h1o4_ON_TAP');
                                     //GoRouter.of(context).prepareAuthEvent();
                                     // final user = await authManager
                                     //     .signInWithApple(context);
@@ -888,8 +888,8 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
                               ),
                               FFButtonWidget(
                                 onPressed: () async {
-                                  logFirebaseEvent(
-                                      'AUTH_CREATE_PAGE_LOG_IN_BTN_ON_TAP');
+                                  // logFirebaseEvent(
+                                  //     'AUTH_CREATE_PAGE_LOG_IN_BTN_ON_TAP');
 
                                   context.pushNamed(
                                     'auth_Login',
