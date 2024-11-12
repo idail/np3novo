@@ -22,8 +22,10 @@ class MainContractsWidget extends StatefulWidget {
   final String? email_usuario;
   final String? login_usuario;
   final String? nome_usuario;
+  final String? departamentos_gestor;
 
-  const MainContractsWidget({super.key, this.usuariocodigo, this.tipo_acesso, this.codigo_departamento_fornecedor , this.email_usuario , this.login_usuario , this.nome_usuario});
+  const MainContractsWidget({super.key, this.usuariocodigo, this.tipo_acesso, this.codigo_departamento_fornecedor , 
+  this.email_usuario , this.login_usuario , this.nome_usuario , this.departamentos_gestor});
 
   @override
   State<MainContractsWidget> createState() => _MainContractsWidgetState();
@@ -68,7 +70,7 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
     if(widget.tipo_acesso == "gestor")
     {
       var uri = Uri.parse(
-        "http://192.168.100.6/np3beneficios_appphp/api/pedidos/busca_pedidos.php?codigo_usuario=${widget.usuariocodigo}&tipo_acesso=${widget.tipo_acesso}");
+        "http://192.168.15.200/np3beneficios_appphp/api/pedidos/busca_pedidos.php?codigo_usuario=${widget.usuariocodigo}&tipo_acesso=${widget.tipo_acesso}&departamentos=${widget.departamentos_gestor}");
       var resposta = await http.get(uri, headers: {"Accept": "application/json"});
       List<dynamic> data = json.decode(resposta.body);
 
@@ -77,7 +79,7 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
       });
     }else{
       var uri = Uri.parse(
-        "http://192.168.100.6/np3beneficios_appphp/api/pedidos/busca_pedidos.php?codigo_usuario=${widget.usuariocodigo}&tipo_acesso=${widget.tipo_acesso}&codigo_fornecedor_departamento=${widget.codigo_departamento_fornecedor}");
+        "http://192.168.15.200/np3beneficios_appphp/api/pedidos/busca_pedidos.php?codigo_usuario=${widget.usuariocodigo}&tipo_acesso=${widget.tipo_acesso}&codigo_fornecedor_departamento=${widget.codigo_departamento_fornecedor}");
       var resposta = await http.get(uri, headers: {"Accept": "application/json"});
 
       List<dynamic> data = json.decode(resposta.body);
@@ -239,7 +241,7 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
                                 style: Theme.of(context).textTheme.titleSmall,
                               ),
                               Text(
-                                'Nome: $recebeNomeUsuario',
+                                'Nome: ${item['usuario']}',
                                 style: Theme.of(context).textTheme.titleSmall,
                               ),
                               Text(
@@ -286,15 +288,15 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
                             ] else if (widget.tipo_acesso == 'fornecedor') ...[
                               Text(
                                 'Código: ${item['id']}',
-                                style: Theme.of(context).textTheme.titleLarge,
+                                style: Theme.of(context).textTheme.titleSmall,
                               ),
                               Text(
                                 'Descrição: ${item['descricaopedido']}',
-                                style: Theme.of(context).textTheme.titleMedium,
+                                style: Theme.of(context).textTheme.titleSmall,
                               ),
                               Text(
                                 'Usuário: $recebeLoginUsuario',
-                                style: Theme.of(context).textTheme.bodyLarge,
+                                style: Theme.of(context).textTheme.titleSmall,
                               ),
                               Text(
                                 'Data: $dataFormatadaBR',
