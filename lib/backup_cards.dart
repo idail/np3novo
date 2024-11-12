@@ -7,8 +7,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'main_contracts_model.dart';
-export 'main_contracts_model.dart';
+// import 'main_contracts_model.dart';
+// export 'main_contracts_model.dart';
 
 class MainContractsWidget extends StatefulWidget {
   const MainContractsWidget({super.key});
@@ -19,7 +19,7 @@ class MainContractsWidget extends StatefulWidget {
 
 class _MainContractsWidgetState extends State<MainContractsWidget>
     with TickerProviderStateMixin {
-  late MainContractsModel _model;
+  // late MainContractsModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -28,10 +28,10 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => MainContractsModel());
+    // _model = createModel(context, () => MainContractsModel());
 
-    logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'Main_Contracts'});
+    // logFirebaseEvent('screen_view',
+    //     parameters: {'screen_name': 'Main_Contracts'});
     animationsMap.addAll({
       'textOnPageLoadAnimation1': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
@@ -184,7 +184,7 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
 
   @override
   void dispose() {
-    _model.dispose();
+    // _model.dispose();
 
     super.dispose();
   }
@@ -226,13 +226,13 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
                     phone: false,
                     tablet: false,
                   ))
-                    wrapWithModel(
-                      model: _model.webNavModel,
-                      updateCallback: () => setState(() {}),
-                      child: const WebNavWidget(
-                        selectedNav: 3,
-                      ),
-                    ),
+                    // wrapWithModel(
+                    //   model: _model.webNavModel,
+                    //   updateCallback: () => setState(() {}),
+                    //   child: const WebNavWidget(
+                    //     selectedNav: 3,
+                    //   ),
+                    // ),
                   Expanded(
                     child: Container(
                       width: 300.0,
@@ -299,8 +299,8 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
                                           size: 30.0,
                                         ),
                                         onPressed: () async {
-                                          logFirebaseEvent(
-                                              'MAIN_CONTRACTS_search_rounded_ICN_ON_TAP');
+                                          // logFirebaseEvent(
+                                          //     'MAIN_CONTRACTS_search_rounded_ICN_ON_TAP');
                                           await showModalBottomSheet(
                                             isScrollControlled: true,
                                             backgroundColor: Colors.transparent,
@@ -386,8 +386,8 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        logFirebaseEvent(
-                                            'MAIN_CONTRACTS_Container_xb52jnww_ON_TAP');
+                                        // logFirebaseEvent(
+                                        //     'MAIN_CONTRACTS_Container_xb52jnww_ON_TAP');
                                         if (MediaQuery.sizeOf(context).width >=
                                             991.0) {
                                           await showDialog(
@@ -698,8 +698,8 @@ class _MainContractsWidgetState extends State<MainContractsWidget>
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        logFirebaseEvent(
-                                            'MAIN_CONTRACTS_Container_44w0jkj6_ON_TAP');
+                                        // logFirebaseEvent(
+                                        //     'MAIN_CONTRACTS_Container_44w0jkj6_ON_TAP');
                                         if (MediaQuery.sizeOf(context).width >=
                                             991.0) {
                                           await showDialog(

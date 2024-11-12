@@ -448,7 +448,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Colors.white12, // Cor de fundo azul bem fraco
+        backgroundColor: Colors.green[100], // Cor de fundo azul bem fraco
         body: Container(
           width: double.infinity,
           height: double.infinity,
