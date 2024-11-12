@@ -1,4 +1,4 @@
-import 'package:np3novo/main.dart';
+import 'package:financas/pages/auth_pages/auth_create/auth_create_widget.dart';
 
 import '../../main_pages/main_home/main_home_widget.dart';
 import '/components/main_logo_small/main_logo_small_widget.dart';
@@ -445,21 +445,13 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        backgroundColor: Colors.white12, // Cor de fundo azul bem fraco
         body: Container(
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                FlutterFlowTheme.of(context).accent1,
-                FlutterFlowTheme.of(context).primary
-              ],
-              stops: const [0.3, 1.0],
-              begin: const AlignmentDirectional(1.0, -1.0),
-              end: const AlignmentDirectional(-1.0, 1.0),
+            //color:Colors.blue,
             ),
-          ),
           alignment: const AlignmentDirectional(0.0, 0.0),
           child: SingleChildScrollView(
             child: Column(
@@ -490,21 +482,20 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
                                   0.0, 0.0, 0.0, 30.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  wrapWithModel(
-                                    model: _model.mainLogoSmallModel,
-                                    updateCallback: () => setState(() {}),
-                                    child: const MainLogoSmallWidget(),
+                                        Image.asset(
+                                    'assets/images/dinheiro.png', // Caminho da imagem
+                                    width: 100.0, // Ajuste a largura conforme necessário
+                                    height: 100.0, // Ajuste a altura conforme necessário
+                                    fit: BoxFit.fitWidth, // Ajusta o estilo de exibição da imagem
                                   ),
                                 ],
                               ).animateOnPageLoad(
                                   animationsMap['rowOnPageLoadAnimation1']!),
                             ),
                             Text(
-                              FFLocalizations.of(context).getText(
-                                '3p97u62u' /* Welcome Back! */,
-                              ),
+                              "Bem-vindo",
                               style: FlutterFlowTheme.of(context)
                                   .displaySmall
                                   .override(
@@ -517,14 +508,12 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 4.0, 0.0, 0.0),
                               child: Text(
-                                FFLocalizations.of(context).getText(
-                                  'xkz4xjo6' /* Use the form below to access y... */,
-                                ),
+                                "Informe seus dados para logar",
                                 style: FlutterFlowTheme.of(context)
                                     .labelLarge
                                     .override(
                                       fontFamily: 'Plus Jakarta Sans',
-                                      letterSpacing: 0.0,
+                                      letterSpacing: 0.9,
                                     ),
                               ).animateOnPageLoad(
                                   animationsMap['textOnPageLoadAnimation2']!),
@@ -817,6 +806,43 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
                                 ],
                               ).animateOnPageLoad(
                                   animationsMap['rowOnPageLoadAnimation2']!),
+                            ),
+
+                            // Adiciona o link de "Cadastrar" abaixo do botão
+    // Label e botão "Cadastrar" em uma linha
+                            Padding(
+                              padding: const EdgeInsets.only(top: 16.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Primeiro acesso?',
+                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                      fontFamily: 'Plus Jakarta Sans',
+                                      fontSize: 18,
+                                      color: FlutterFlowTheme.of(context).secondaryText,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8.0), // Espaço entre a label e o botão
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AuthCreateWidget()), // Navega para a tela AuthCreateWidget
+    );
+                                    },
+                                    child: Text(
+                                      'Cadastre-se',
+                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        fontSize: 18,
+                                        color: FlutterFlowTheme.of(context).primary,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                             // Padding(
                             //   padding: const EdgeInsetsDirectional.fromSTEB(

@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'np3novo',
+      title: 'Finanças',
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
         FFLocalizationsDelegate(),

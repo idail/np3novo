@@ -30,7 +30,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
     super.initState();
     _model = createModel(context, () => AuthCreateModel());
 
-    logFirebaseEvent('screen_view', parameters: {'screen_name': 'auth_Create'});
+    //logFirebaseEvent('screen_view', parameters: {'screen_name': 'auth_Create'});
     _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
 
