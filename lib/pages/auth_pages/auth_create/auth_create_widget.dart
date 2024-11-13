@@ -13,6 +13,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'auth_create_model.dart';
 export 'auth_create_model.dart';
+import 'package:http/http.dart' as http;
+import 'package:path/path.dart' as path;
 
 class AuthCreateWidget extends StatefulWidget {
   const AuthCreateWidget({super.key});
@@ -36,14 +38,52 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
   var confirmasenhausuariotxt = TextEditingController();
 
   File? imagemselecionada;
+  XFile? imagemrecebida;
 
-  Future<void> _pickImage() async {
+  Future<void> selecaoImagem() async {
     final picker = ImagePicker();
-    final imagemrecebida = await picker.pickImage(source: ImageSource.gallery);
+    imagemrecebida = await picker.pickImage(source: ImageSource.gallery);
     if (imagemrecebida != null) {
       setState(() {
-        imagemselecionada = File(imagemrecebida.path);
+        imagemselecionada = File(imagemrecebida!.path);
       });
+    }
+  }
+
+  Future<void> cadastrar() async{
+    var uri = Uri.parse(
+        "http://192.168.100.6/contas_pessoais/api/Usuario.php");
+  
+    // Extrair o nome da imagem
+    String nomeImagem = path.basename(imagemrecebida!.path);
+    print("Nome da imagem: $nomeImagem");
+
+    var valores = jsonEncode({
+      "nome_usuario": nomeusuariotxt.text,
+      "nome_imagem":nomeImagem,
+    });
+
+    try {
+    // Faz a requisição POST com cabeçalho e corpo
+    var resposta = await http.post(
+      uri,
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      },
+      body: valores,
+    );
+
+    // Verifica o status da resposta
+    if (resposta.statusCode == 200) {
+      var dados = jsonDecode(resposta.body);
+      // Processa a resposta conforme necessário
+      print("Valores: $dados");
+    } else {
+      print("Erro ao cadastrar: ${resposta.statusCode}");
+    }
+    } catch (e) {
+      print("Erro na requisição: $e");
     }
   }
 
@@ -329,12 +369,13 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Colors.green[100],
+        backgroundColor: Colors.white30,
         body: Container(
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.green[100]),
+          //  color: Colors.green[100]
+          ),
           alignment: const AlignmentDirectional(0.0, 0.0),
           child: SingleChildScrollView(
             child: Column(
@@ -354,6 +395,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        const SizedBox(height: 50.0),
                         Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 30.0),
@@ -867,7 +909,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
                                 child: Column(
                                   children: [
                                     InkWell(
-                                      onTap: _pickImage,
+                                      onTap: selecaoImagem,
                                       child: Container(
                                         width: 150.0,
                                         height: 150.0,
@@ -1001,7 +1043,8 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
                         //         'textFieldOnPageLoadAnimation3']!),
                         //   ),
                         // ),
-                        ,Padding(
+                        ,
+                        Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 24.0, 0.0, 0.0),
                           child: Row(
@@ -1009,36 +1052,37 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               FFButtonWidget(
-                                onPressed: () async {
-                                  // logFirebaseEvent(
-                                  //     'AUTH_CREATE_PAGE_Button-Login_ON_TAP');
-                                  //GoRouter.of(context).prepareAuthEvent();
-                                  if (_model.passwordTextController.text !=
-                                      _model
-                                          .passwordConfirmTextController.text) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text(
-                                          'Passwords don\'t match!',
-                                        ),
-                                      ),
-                                    );
-                                    return;
-                                  }
+                                onPressed: () async { cadastrar();} ,
+                                // () async {
+                                //   // logFirebaseEvent(
+                                //   //     'AUTH_CREATE_PAGE_Button-Login_ON_TAP');
+                                //   //GoRouter.of(context).prepareAuthEvent();
+                                //   // if (_model.passwordTextController.text !=
+                                //   //     _model
+                                //   //         .passwordConfirmTextController.text) {
+                                //   //   ScaffoldMessenger.of(context).showSnackBar(
+                                //   //     const SnackBar(
+                                //   //       content: Text(
+                                //   //         'Passwords don\'t match!',
+                                //   //       ),
+                                //   //     ),
+                                //   //   );
+                                //   //   return;
+                                //   // }
 
-                                  // final user =
-                                  //     await authManager.createAccountWithEmail(
-                                  //   context,
-                                  //   _model.emailAddressTextController.text,
-                                  //   _model.passwordTextController.text,
-                                  // );
-                                  // if (user == null) {
-                                  //   return;
-                                  // }
+                                //   // final user =
+                                //   //     await authManager.createAccountWithEmail(
+                                //   //   context,
+                                //   //   _model.emailAddressTextController.text,
+                                //   //   _model.passwordTextController.text,
+                                //   // );
+                                //   // if (user == null) {
+                                //   //   return;
+                                //   // }
 
-                                  // context.goNamedAuth(
-                                  //     'Main_Home', context.mounted);
-                                },
+                                //   // context.goNamedAuth(
+                                //   //     'Main_Home', context.mounted);
+                                // },
                                 text: "Criar conta",
                                 options: FFButtonOptions(
                                   height: 52.0,

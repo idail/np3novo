@@ -81,7 +81,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   flutter_barcode_scanner: ^2.0.0
   image_picker: ^0.8.4+3
-
+  path: ^1.8.3
 dependency_overrides:
   http: 1.2.1
   uuid: ^4.0.0
