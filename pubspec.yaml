@@ -128,6 +128,8 @@ flutter:
     - assets/lottie_animations/
     - assets/rive_animations/
     - assets/pdfs/
+    - assets/images/usuario_sem_foto.jpg
+    - assets/images/sem_foto.jpg
 
   
   # An image asset can refer to one or more resolution-specific "variants", see

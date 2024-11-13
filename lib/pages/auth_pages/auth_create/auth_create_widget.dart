@@ -40,6 +40,8 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
   File? imagemselecionada;
   XFile? imagemrecebida;
 
+  String imagemPath = 'assets/images/sem_foto.jpg'; // Caminho padrão
+
   Future<void> selecaoImagem() async {
     final picker = ImagePicker();
     imagemrecebida = await picker.pickImage(source: ImageSource.gallery);
@@ -47,13 +49,14 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
       setState(() {
         imagemselecionada = File(imagemrecebida!.path);
       });
+    }else{
+        imagemselecionada = null; // Caminho da imagem padrão
     }
   }
 
   Future<void> cadastrar() async{
     var uri = Uri.parse(
-        "http://192.168.100.6/contas_pessoais/api/Usuario.php");
-  
+        "http://10.80.130.70/contas_pessoais/api/Usuario.php");
     // Extrair o nome da imagem
     String nomeImagem = path.basename(imagemrecebida!.path);
     print("Nome da imagem: $nomeImagem");
@@ -90,6 +93,12 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
   @override
   void initState() {
     super.initState();
+
+    Image.asset(
+    'assets/images/usuario_sem_foto.jpg',
+    fit: BoxFit.cover,
+    );
+
     _model = createModel(context, () => AuthCreateModel());
 
     //logFirebaseEvent('screen_view', parameters: {'screen_name': 'auth_Create'});
@@ -369,7 +378,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Colors.white30,
+        backgroundColor: const Color.fromARGB(255, 95, 108, 151),
         body: Container(
           width: double.infinity,
           height: double.infinity,
@@ -900,56 +909,71 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
                           ],
                         ),
                         Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-                                child: Column(
-                                  children: [
-                                    InkWell(
-                                      onTap: selecaoImagem,
-                                      child: Container(
-                                        width: 150.0,
-                                        height: 150.0,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context).accent4,
-                                          borderRadius: BorderRadius.circular(12.0),
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context).alternate,
-                                            width: 2.0,
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                                  child: Column(
+                                    children: [
+                                      InkWell(
+                                        onTap: () async {
+                                          await selecaoImagem();
+                                          if (imagemselecionada != null) {
+                                            setState(() {
+                                              imagemPath = imagemselecionada!.path; // Atualiza o caminho se houver uma nova imagem
+                                              print(imagemPath);
+                                            });
+                                          }else{
+                                            print(imagemPath);
+                                          }
+                                        },
+                                        child: Container(
+                                          width: 150.0,
+                                          height: 150.0,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context).accent4,
+                                            borderRadius: BorderRadius.circular(12.0),
+                                            border: Border.all(
+                                              color: FlutterFlowTheme.of(context).alternate,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(15.0),
+                                            child: Center(
+                                              child: imagemselecionada != null
+                                                  ? Image.file(
+                                                      imagemselecionada!,
+                                                      width: 150.0,
+                                                      height: 150.0,
+                                                      fit: BoxFit.cover,
+                                                    )
+                                                  : Image.asset(
+                                                      imagemPath,
+                                                      width: 150.0,
+                                                      height: 150.0,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                            ),
                                           ),
                                         ),
-                                        child: imagemselecionada != null
-                                            ? ClipRRect(
-                                                borderRadius: BorderRadius.circular(12.0),
-                                                child: Image.file(
-                                                  imagemselecionada!,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              )
-                                            : Icon(
-                                                Icons.camera_alt,
-                                                color: FlutterFlowTheme.of(context).secondaryText,
-                                                size: 40.0,
-                                              ),
                                       ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(
-                                      "Selecione uma imagem",
-                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            letterSpacing: 0.0,
-                                          ),
-                                    ),
-                                  ],
+                                      SizedBox(height: 10),
+                                      Text(
+                                        "Selecione uma imagem",
+                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                          fontFamily: 'Plus Jakarta Sans',
+                                          letterSpacing: 0.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        )
+                            ],
+                          )
                         // Container(
                         //   decoration: const BoxDecoration(),
                         //   child: Padding(
