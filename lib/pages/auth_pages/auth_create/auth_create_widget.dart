@@ -58,7 +58,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
 
   Future<void> cadastrar() async{
     var uri = Uri.parse(
-        "http://192.168.100.46/contas_pessoais_php/api/Usuario.php");
+        "http://192.168.100.6/contas_pessoais_php/api/Usuario.php");
     // Extrair o nome da imagem
 
     String nomeImagem = "";
@@ -68,39 +68,75 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
       nomeImagem = imagemPath;
     }
 
-    print(nomeImagem);
+    if(nomeusuariotxt.text.isEmpty){
+      mostrarAlerta("Verificar preenchimento", "Favor preencher o nome do usuário");
+    }else if(usuariotxt.text.isEmpty){
+      mostrarAlerta("Verificar preenchimento", "Favor preencher o usuário");
+    }else if(emailusuariotxt.text.isEmpty){
+      mostrarAlerta("Verificar preenchimento", "Favor preencher o e-mail do usuário");
+    }else if(senhausuariotxt.text.isEmpty){
+      mostrarAlerta("Verificar preenchimento", "Favor preencher a senha do usuário");
+    }else if(confirmasenhausuariotxt.text.isEmpty){
+      mostrarAlerta("Verificar preenchimento", "Favor preencher a confirmação da senha");
+    }else{
+      if(senhausuariotxt.text == confirmasenhausuariotxt.text){
 
-    var valores = jsonEncode({
-      "nome_usuario": nomeusuariotxt.text,
-      "login_usuario": usuariotxt.text,
-      "email_usuario": emailusuariotxt.text,
-      "senha_usuario":senhausuariotxt.text,
-      "nome_imagem":nomeImagem,
-    });
+        print(senhausuariotxt.text);
 
-    try {
-    // Faz a requisição POST com cabeçalho e corpo
-    var resposta = await http.post(
-      uri,
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-      },
-      body: valores,
-    );
+        var valores = jsonEncode({
+          "nome_usuario": nomeusuariotxt.text,
+          "login_usuario": usuariotxt.text,
+          "email_usuario": emailusuariotxt.text,
+          "senha_usuario":senhausuariotxt.text,
+          "nome_imagem":nomeImagem,
+        });
+
+        
+        try {
+          // Faz a requisição POST com cabeçalho e corpo
+          var resposta = await http.post(
+          uri,
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
+          body: valores,
+          );
     
-    // Verifica o status da resposta
-    if (resposta.statusCode == 200) {
-      dados = jsonDecode(resposta.body);
-      // Processa a resposta conforme necessário
-      print("Valores: $dados");
-    } else {
-      print("Erro ao cadastrar: ${resposta.statusCode}");
+          // Verifica o status da resposta
+          if (resposta.statusCode == 200) {
+            dados = jsonDecode(resposta.body);
+            // Processa a resposta conforme necessário
+            print("Valores: $dados");
+          } else {
+            print("Erro ao cadastrar: ${resposta.statusCode}");
+          }
+        } catch (e) {
+          print(dados);
+          //print("Erro na requisição: $e");
+        }
+      }  
     }
-    } catch (e) {
-      print(dados);
-      //print("Erro na requisição: $e");
-    }
+  }
+
+  void mostrarAlerta(String titulo, String mensagem) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(titulo),
+          content: Text(mensagem),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -391,7 +427,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 0, 102, 180),
         body: Container(
           width: double.infinity,
           height: double.infinity,
