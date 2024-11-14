@@ -42,6 +42,8 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
 
   String imagemPath = 'assets/images/sem_foto.jpg'; // Caminho padrão
 
+  var dados = "";
+
   Future<void> selecaoImagem() async {
     final picker = ImagePicker();
     imagemrecebida = await picker.pickImage(source: ImageSource.gallery);
@@ -56,13 +58,23 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
 
   Future<void> cadastrar() async{
     var uri = Uri.parse(
-        "http://10.80.130.70/contas_pessoais/api/Usuario.php");
+        "http://192.168.100.46/contas_pessoais_php/api/Usuario.php");
     // Extrair o nome da imagem
-    String nomeImagem = path.basename(imagemrecebida!.path);
-    print("Nome da imagem: $nomeImagem");
+
+    String nomeImagem = "";
+    if(imagemrecebida != null){
+      nomeImagem = path.basename(imagemrecebida!.path);
+    }else{
+      nomeImagem = imagemPath;
+    }
+
+    print(nomeImagem);
 
     var valores = jsonEncode({
       "nome_usuario": nomeusuariotxt.text,
+      "login_usuario": usuariotxt.text,
+      "email_usuario": emailusuariotxt.text,
+      "senha_usuario":senhausuariotxt.text,
       "nome_imagem":nomeImagem,
     });
 
@@ -76,17 +88,18 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
       },
       body: valores,
     );
-
+    
     // Verifica o status da resposta
     if (resposta.statusCode == 200) {
-      var dados = jsonDecode(resposta.body);
+      dados = jsonDecode(resposta.body);
       // Processa a resposta conforme necessário
       print("Valores: $dados");
     } else {
       print("Erro ao cadastrar: ${resposta.statusCode}");
     }
     } catch (e) {
-      print("Erro na requisição: $e");
+      print(dados);
+      //print("Erro na requisição: $e");
     }
   }
 
@@ -94,10 +107,10 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
   void initState() {
     super.initState();
 
-    Image.asset(
-    'assets/images/usuario_sem_foto.jpg',
-    fit: BoxFit.cover,
-    );
+    // Image.asset(
+    // 'assets/images/usuario_sem_foto.jpg',
+    // fit: BoxFit.cover,
+    // );
 
     _model = createModel(context, () => AuthCreateModel());
 
@@ -378,7 +391,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: const Color.fromARGB(255, 95, 108, 151),
+        backgroundColor: Colors.white,
         body: Container(
           width: double.infinity,
           height: double.infinity,
@@ -467,6 +480,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
                                         .override(
                                           fontFamily: 'Plus Jakarta Sans',
                                           letterSpacing: 0.0,
+                                          fontSize: 20,
                                         ),
                                     hintText:
                                         "Informe seu nome",
@@ -475,6 +489,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
                                         .override(
                                           fontFamily: 'Plus Jakarta Sans',
                                           letterSpacing: 0.0,
+
                                         ),
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -553,6 +568,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
                                         .override(
                                           fontFamily: 'Plus Jakarta Sans',
                                           letterSpacing: 0.0,
+                                          fontSize: 20,
                                         ),
                                     hintText:
                                         "Informe seu usuário",
@@ -639,6 +655,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
                                         .override(
                                           fontFamily: 'Plus Jakarta Sans',
                                           letterSpacing: 0.0,
+                                          fontSize: 20,
                                         ),
                                     hintText:
                                         "Informe seu e-mail",
@@ -713,8 +730,8 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 16.0, 0.0, 0.0),
                                 child: TextFormField(
-                                  controller: _model.passwordTextController,
-                                  focusNode: _model.passwordFocusNode,
+                                  controller: senhausuariotxt,
+                                  //focusNode: _model.passwordFocusNode,
                                   autofocus: true,
                                   autofillHints: const [AutofillHints.password],
                                   obscureText: !_model.passwordVisibility,
@@ -726,6 +743,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
                                         .override(
                                           fontFamily: 'Plus Jakarta Sans',
                                           letterSpacing: 0.0,
+                                          fontSize: 20,
                                         ),
                                     hintText:
                                         "Informe sua senha",
@@ -816,7 +834,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
                                     0.0, 16.0, 0.0, 0.0),
                                 child: TextFormField(
                                   controller: confirmasenhausuariotxt,
-                                  focusNode: _model.passwordFocusNode,
+                                  //focusNode: _model.passwordFocusNode,
                                   autofocus: true,
                                   autofillHints: const [AutofillHints.password],
                                   obscureText: !_model.passwordVisibility,
@@ -828,6 +846,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
                                         .override(
                                           fontFamily: 'Plus Jakarta Sans',
                                           letterSpacing: 0.0,
+                                          fontSize: 20,
                                         ),
                                     hintText:
                                         "Informe sua senha",
