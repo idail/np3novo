@@ -75,11 +75,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ),
         FFRoute(
           name: 'Main_Home',
-          path: '/mainHome/:tipoacesso/:nomeusuario/:usuario_codigo/:codigo_departamento_fornecedor/:login_usuario/:email_usuario/:departamentos_gestor',
-          builder: (context, params) => NavBarPage(initialPage: 'Main_Home',tipoacesso: params.getParam('tipoacesso', ParamType.String), 
-              nomeusuario:params.getParam("nomeusuario", ParamType.String),usuario_codigo:params.getParam("usuario_codigo", ParamType.int),
-              codigo_departamento_fornecedor: params.getParam('codigo_departamento_fornecedor', ParamType.String),
-              login_usuario: params.getParam("login_usuario", ParamType.String), email_usuario: params.getParam("email_usuario", ParamType.String)),
+          path: '/mainHome/:nomeusuario/:usuario_codigo',
+          builder: (context, params) => NavBarPage(initialPage: 'Main_Home',nomeusuario:params.getParam("nomeusuario", ParamType.String),
+          usuario_codigo:params.getParam("usuario_codigo", ParamType.int),
+              ),
         ),
         FFRoute(
           name: 'Main_customerList',

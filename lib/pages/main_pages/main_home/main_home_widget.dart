@@ -10,10 +10,9 @@ export 'main_home_model.dart';
 import 'package:http/http.dart' as http;
 
 class MainHomeWidget extends StatefulWidget {
-  final String? tipoacesso;
   final String? nomeusuario;
   final int ?codigousuario;
-  MainHomeWidget({Key? key, this.tipoacesso, this.nomeusuario, this.codigousuario}) : super(key: key);
+  MainHomeWidget({Key? key, this.nomeusuario, this.codigousuario}) : super(key: key);
 
   @override
   State<MainHomeWidget> createState() => _MainHomeWidgetState();
@@ -33,23 +32,25 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
   void initState() {
     super.initState();
 
-    String recebe = "${widget.tipoacesso} - ${widget.nomeusuario}";
+    print(widget.nomeusuario);
+
+    //String recebe = "${widget.tipoacesso} - ${widget.nomeusuario}";
     
-    print(recebe);
+    //print(recebe);
 
-    var recebe_tipo_acesso = "";
+    // var recebe_tipo_acesso = "";
 
-    if(widget.tipoacesso != "")
-      recebe_tipo_acesso = widget.tipoacesso!;
+    // if(widget.tipoacesso != "")
+    //   recebe_tipo_acesso = widget.tipoacesso!;
 
     var recebe_codigo_usuario = 0;
 
     if(widget.codigousuario != 0)
       recebe_codigo_usuario = widget.codigousuario!;
 
-    carregaInformacoes(recebe_tipo_acesso, recebe_codigo_usuario);
+    carregaInformacoes(recebe_codigo_usuario);
 
-    _model = createModel(context, () => MainHomeModel());
+    //_model = createModel(context, () => MainHomeModel());
 
     //logFirebaseEvent('screen_view', parameters: {'screen_name': 'Main_Home'});
     animationsMap.addAll({
@@ -856,98 +857,98 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
   double valorTotal = 0;
   String valorConsumidoString = "";
 
-  Future<void> carregaInformacoes(String perfil,int codigo_usuario) async
+  Future<void> carregaInformacoes(int codigo_usuario) async
   {
-    var busca_empenho = "valor_empenho";
-    var busca_valor_cotacao = "valor_cotacao";
-    var busca_cotacao_pago = "valor_cotacao_pago";
-    var busca_cotacao_aberto = "valor_cotacao_aberto";
-    if(perfil == "gestor")
-    {
-      var uri = Uri.parse(
-        "http://192.168.15.200/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_empenho");
-      var resposta = await http.get(uri, headers: {"Accept": "application/json"});
-      var retorno = jsonDecode(resposta.body);
+    // var busca_empenho = "valor_empenho";
+    // var busca_valor_cotacao = "valor_cotacao";
+    // var busca_cotacao_pago = "valor_cotacao_pago";
+    // var busca_cotacao_aberto = "valor_cotacao_aberto";
+    // if(perfil == "gestor")
+    // {
+    //   var uri = Uri.parse(
+    //     "http://192.168.15.200/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_empenho");
+    //   var resposta = await http.get(uri, headers: {"Accept": "application/json"});
+    //   var retorno = jsonDecode(resposta.body);
 
-      for (var i = 0; i < retorno.length; i++) {
-        var valor_empenho_string = retorno[i]["valor_empenho"];
-        double valorEmpenho = double.parse(valor_empenho_string);
-        if(valorEmpenho > 0){
-          print(retorno[i]["valor_empenho"]);
-          valorEmpenhoRecebido = double.parse(retorno[i]["valor_empenho"]);
-          print(valorEmpenho);
-        }else{
-          print("zerado");
-        }
-      }
+    //   for (var i = 0; i < retorno.length; i++) {
+    //     var valor_empenho_string = retorno[i]["valor_empenho"];
+    //     double valorEmpenho = double.parse(valor_empenho_string);
+    //     if(valorEmpenho > 0){
+    //       print(retorno[i]["valor_empenho"]);
+    //       valorEmpenhoRecebido = double.parse(retorno[i]["valor_empenho"]);
+    //       print(valorEmpenho);
+    //     }else{
+    //       print("zerado");
+    //     }
+    //   }
 
-      var uri_cotacao = Uri.parse(
-        "http://192.168.15.200/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_valor_cotacao");
-      var resposta_cotacao = await http.get(uri_cotacao, headers: {"Accept": "application/json"});
-      var retorno_cotacao = jsonDecode(resposta_cotacao.body);
+    //   var uri_cotacao = Uri.parse(
+    //     "http://192.168.15.200/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_valor_cotacao");
+    //   var resposta_cotacao = await http.get(uri_cotacao, headers: {"Accept": "application/json"});
+    //   var retorno_cotacao = jsonDecode(resposta_cotacao.body);
       
-      print(retorno_cotacao);
+    //   print(retorno_cotacao);
 
 
-      var recebeGestor = retorno_cotacao[0]['SUM(valor_total_cotacao)'];
+    //   var recebeGestor = retorno_cotacao[0]['SUM(valor_total_cotacao)'];
       
-      // Suponha que você tenha o valor assim:
-      //List<Map<String, int>> resultado = retorno_cotacao[0];
+    //   // Suponha que você tenha o valor assim:
+    //   //List<Map<String, int>> resultado = retorno_cotacao[0];
 
-      // Acessar o primeiro item da lista (que é um mapa)
-      //Map<String, int> mapa = resultado[0];
+    //   // Acessar o primeiro item da lista (que é um mapa)
+    //   //Map<String, int> mapa = resultado[0];
 
-      // Acessar o valor do mapa usando a chave
-      //int valorC = mapa['SUM(valor_total_cotacao)'] ?? 0;
+    //   // Acessar o valor do mapa usando a chave
+    //   //int valorC = mapa['SUM(valor_total_cotacao)'] ?? 0;
 
       
 
-      //print(valorConsumido); // Output: 662
+    //   //print(valorConsumido); // Output: 662
 
-      print(valorConsumido);
+    //   print(valorConsumido);
 
-        setState(() {
-          valorEmpenhoGestor = valorEmpenhoRecebido;
+    //     setState(() {
+    //       valorEmpenhoGestor = valorEmpenhoRecebido;
 
-          valorConsumido = double.parse(recebeGestor);
-          if(valorEmpenhoGestor != "" && valorConsumido != "")
-            saldoAtual = valorEmpenhoGestor - valorConsumido;
-        });
-    }else{
-      var uri = Uri.parse(
-      "http://192.168.15.200/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_cotacao_pago");
-      var resposta_fornecedor = await http.get(uri, headers: {"Accept": "application/json"});
-      var retorno_fornecedor = jsonDecode(resposta_fornecedor.body);
+    //       valorConsumido = double.parse(recebeGestor);
+    //       if(valorEmpenhoGestor != "" && valorConsumido != "")
+    //         saldoAtual = valorEmpenhoGestor - valorConsumido;
+    //     });
+    // }else{
+    //   var uri = Uri.parse(
+    //   "http://192.168.15.200/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_cotacao_pago");
+    //   var resposta_fornecedor = await http.get(uri, headers: {"Accept": "application/json"});
+    //   var retorno_fornecedor = jsonDecode(resposta_fornecedor.body);
 
-      print(retorno_fornecedor);
+    //   print(retorno_fornecedor);
 
-      // Acessa o primeiro item da lista que retorna da API
-      var recebeFornecedor = retorno_fornecedor[0]['sum(valor_total_cotacao)'];
+    //   // Acessa o primeiro item da lista que retorna da API
+    //   var recebeFornecedor = retorno_fornecedor[0]['sum(valor_total_cotacao)'];
 
-      // Acessar o valor associado à chave "SUM(valor_total_cotacao)"
-      //double valorConsumido = recebe['SUM(valor_total_cotacao)'] ?? 0.0;
+    //   // Acessar o valor associado à chave "SUM(valor_total_cotacao)"
+    //   //double valorConsumido = recebe['SUM(valor_total_cotacao)'] ?? 0.0;
 
-      print(valorConsumido); // Output: 662.0 (por exemplo)
+    //   print(valorConsumido); // Output: 662.0 (por exemplo)
 
-      var uri_cotacao_aberto = Uri.parse(
-      "http://192.168.15.200/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_cotacao_aberto");
-      var resposta_fornecedor_aberto = await http.get(uri_cotacao_aberto, headers: {"Accept": "application/json"});
-      var retorno_fornecedor_aberto = jsonDecode(resposta_fornecedor_aberto.body);
+    //   var uri_cotacao_aberto = Uri.parse(
+    //   "http://192.168.15.200/np3beneficios_appphp/api/pedidos/grafico.php?perfil=$perfil&codigo_usuario=$codigo_usuario&tipo_busca=$busca_cotacao_aberto");
+    //   var resposta_fornecedor_aberto = await http.get(uri_cotacao_aberto, headers: {"Accept": "application/json"});
+    //   var retorno_fornecedor_aberto = jsonDecode(resposta_fornecedor_aberto.body);
 
-      var recebeFornecedorAberto = retorno_fornecedor_aberto[0]["sum(valor_total_cotacao)"];
+    //   var recebeFornecedorAberto = retorno_fornecedor_aberto[0]["sum(valor_total_cotacao)"];
 
-      print(retorno_fornecedor_aberto);
+    //   print(retorno_fornecedor_aberto);
 
-      setState(() {
-        //valorRecebido = recebeFornecedor.toDouble();  
-        valorPendente = double.parse(recebeFornecedor);
-        //valorPendente = recebeFornecedorAberto.toDouble();
-        valorPendente = double.parse(recebeFornecedorAberto);
+    //   setState(() {
+    //     //valorRecebido = recebeFornecedor.toDouble();  
+    //     valorPendente = double.parse(recebeFornecedor);
+    //     //valorPendente = recebeFornecedorAberto.toDouble();
+    //     valorPendente = double.parse(recebeFornecedorAberto);
 
-        if(valorRecebido != "" && valorPendente != "")
-        saldoAtual = valorRecebido - valorPendente;
-      });
-    }
+    //     if(valorRecebido != "" && valorPendente != "")
+    //     saldoAtual = valorRecebido - valorPendente;
+    //   });
+    // }
   }
 
   @override
@@ -1189,43 +1190,43 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          Text(widget.tipoacesso == 'gestor' ? 'VALORES DO EMPENHO' : 'VALOR RECEBIDO',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .labelMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Plus Jakarta Sans',
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                          ).animateOnPageLoad(
-                                                              animationsMap[
-                                                                  'textOnPageLoadAnimation3']!),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        8.0,
-                                                                        0.0,
-                                                                        0.0),
-                                                            child: Text(widget.tipoacesso == "gestor" 
-    ? valorEmpenhoGestor.toStringAsFixed(2) 
-    : valorRecebido.toStringAsFixed(2),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .displaySmall
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Outfit',
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                  ),
-                                                            ).animateOnPageLoad(
-                                                                animationsMap[
-                                                                    'textOnPageLoadAnimation4']!),
-                                                          ),
+                                                          // Text(widget.tipoacesso == 'gestor' ? 'VALORES DO EMPENHO' : 'VALOR RECEBIDO',
+                                                          //   style: FlutterFlowTheme
+                                                          //           .of(context)
+                                                          //       .labelMedium
+                                                          //       .override(
+                                                          //         fontFamily:
+                                                          //             'Plus Jakarta Sans',
+                                                          //         letterSpacing:
+                                                          //             0.0,
+                                                          //       ),
+                                                          // ).animateOnPageLoad(
+                                                          //     animationsMap[
+                                                          //         'textOnPageLoadAnimation3']!),
+                                                          // Padding(
+                                                          //   padding:
+                                                          //       const EdgeInsetsDirectional
+                                                          //           .fromSTEB(
+                                                          //               0.0,
+                                                          //               8.0,
+                                                          //               0.0,
+                                                          //               0.0),
+    //                                                         child: Text(widget.tipoacesso == "gestor" 
+    // ? valorEmpenhoGestor.toStringAsFixed(2) 
+    // : valorRecebido.toStringAsFixed(2),
+    //                                                           style: FlutterFlowTheme
+    //                                                                   .of(context)
+    //                                                               .displaySmall
+    //                                                               .override(
+    //                                                                 fontFamily:
+    //                                                                     'Outfit',
+    //                                                                 letterSpacing:
+    //                                                                     0.0,
+    //                                                               ),
+    //                                                         ).animateOnPageLoad(
+    //                                                             animationsMap[
+    //                                                                 'textOnPageLoadAnimation4']!),
+                                                          // ),
                                                         ],
                                                       ),
                                                     ),
@@ -1332,41 +1333,41 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          Text(widget.tipoacesso == 'gestor' ? 'VALORES CONSUMIDOS' : 'VALOR PENDENTE',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .labelMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Plus Jakarta Sans',
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                          ).animateOnPageLoad(
-                                                              animationsMap[
-                                                                  'textOnPageLoadAnimation5']!),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        8.0,
-                                                                        0.0,
-                                                                        0.0),
-                                                            child: Text(widget.tipoacesso == "gestor" ? valorConsumido.toStringAsFixed(2) : valorPendente.toStringAsFixed(2),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .displaySmall
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Outfit',
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                  ),
-                                                            ).animateOnPageLoad(
-                                                                animationsMap[
-                                                                    'textOnPageLoadAnimation6']!),
-                                                          ),
+                                                          // Text(widget.tipoacesso == 'gestor' ? 'VALORES CONSUMIDOS' : 'VALOR PENDENTE',
+                                                          //   style: FlutterFlowTheme
+                                                          //           .of(context)
+                                                          //       .labelMedium
+                                                          //       .override(
+                                                          //         fontFamily:
+                                                          //             'Plus Jakarta Sans',
+                                                          //         letterSpacing:
+                                                          //             0.0,
+                                                          //       ),
+                                                          // ).animateOnPageLoad(
+                                                          //     animationsMap[
+                                                          //         'textOnPageLoadAnimation5']!),
+                                                          // Padding(
+                                                          //   padding:
+                                                          //       const EdgeInsetsDirectional
+                                                          //           .fromSTEB(
+                                                          //               0.0,
+                                                          //               8.0,
+                                                          //               0.0,
+                                                          //               0.0),
+                                                          //   child: Text(widget.tipoacesso == "gestor" ? valorConsumido.toStringAsFixed(2) : valorPendente.toStringAsFixed(2),
+                                                          //     style: FlutterFlowTheme
+                                                          //             .of(context)
+                                                          //         .displaySmall
+                                                          //         .override(
+                                                          //           fontFamily:
+                                                          //               'Outfit',
+                                                          //           letterSpacing:
+                                                          //               0.0,
+                                                          //         ),
+                                                          //   ).animateOnPageLoad(
+                                                          //       animationsMap[
+                                                          //           'textOnPageLoadAnimation6']!),
+                                                          // ),
                                                         ],
                                                       ),
                                                     ),
@@ -1473,43 +1474,43 @@ class _MainHomeWidgetState extends State<MainHomeWidget>
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          Text(widget.tipoacesso == 'gestor' ? 'SALDO ATUAL' : 'VALOR PENDENTE',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .labelMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Plus Jakarta Sans',
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                          ).animateOnPageLoad(
-                                                              animationsMap[
-                                                                  'textOnPageLoadAnimation7']!),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        8.0,
-                                                                        0.0,
-                                                                        0.0),
-                                                            child: Text(widget.tipoacesso == "gestor" 
-    ? saldoAtual.toStringAsFixed(2) 
-    : saldoAtual.toStringAsFixed(2),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .displaySmall
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Outfit',
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                  ),
-                                                            ).animateOnPageLoad(
-                                                                animationsMap[
-                                                                    'textOnPageLoadAnimation8']!),
-                                                          ),
+    //                                                       Text(widget.tipoacesso == 'gestor' ? 'SALDO ATUAL' : 'VALOR PENDENTE',
+    //                                                         style: FlutterFlowTheme
+    //                                                                 .of(context)
+    //                                                             .labelMedium
+    //                                                             .override(
+    //                                                               fontFamily:
+    //                                                                   'Plus Jakarta Sans',
+    //                                                               letterSpacing:
+    //                                                                   0.0,
+    //                                                             ),
+    //                                                       ).animateOnPageLoad(
+    //                                                           animationsMap[
+    //                                                               'textOnPageLoadAnimation7']!),
+    //                                                       Padding(
+    //                                                         padding:
+    //                                                             const EdgeInsetsDirectional
+    //                                                                 .fromSTEB(
+    //                                                                     0.0,
+    //                                                                     8.0,
+    //                                                                     0.0,
+    //                                                                     0.0),
+    //                                                         child: Text(widget.tipoacesso == "gestor" 
+    // ? saldoAtual.toStringAsFixed(2) 
+    // : saldoAtual.toStringAsFixed(2),
+    //                                                           style: FlutterFlowTheme
+    //                                                                   .of(context)
+    //                                                               .displaySmall
+    //                                                               .override(
+    //                                                                 fontFamily:
+    //                                                                     'Outfit',
+    //                                                                 letterSpacing:
+    //                                                                     0.0,
+    //                                                               ),
+    //                                                         ).animateOnPageLoad(
+    //                                                             animationsMap[
+    //                                                                 'textOnPageLoadAnimation8']!),
+    //                                                       ),
                                                         ],
                                                       ),
                                                     ),

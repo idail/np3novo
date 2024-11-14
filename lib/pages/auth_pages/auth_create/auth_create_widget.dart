@@ -42,7 +42,9 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
 
   String imagemPath = 'assets/images/sem_foto.jpg'; // Caminho padrão
 
-  var dados = "";
+  var dados;
+
+  bool senhaVerificada = false;
 
   Future<void> selecaoImagem() async {
     final picker = ImagePicker();
@@ -58,7 +60,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
 
   Future<void> cadastrar() async{
     var uri = Uri.parse(
-        "http://192.168.100.6/contas_pessoais_php/api/Usuario.php");
+        "http://192.168.100.46/contas_pessoais_php/api/Usuario.php");
     // Extrair o nome da imagem
 
     String nomeImagem = "";
@@ -79,7 +81,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
     }else if(confirmasenhausuariotxt.text.isEmpty){
       mostrarAlerta("Verificar preenchimento", "Favor preencher a confirmação da senha");
     }else{
-      if(senhausuariotxt.text == confirmasenhausuariotxt.text){
+      if(senhaVerificada){
 
         print(senhausuariotxt.text);
 
@@ -107,7 +109,15 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
           if (resposta.statusCode == 200) {
             dados = jsonDecode(resposta.body);
             // Processa a resposta conforme necessário
-            print("Valores: $dados");
+            var valor_retorno = int.parse(dados);
+            if(valor_retorno > 0){
+              var pathParameters = <String, String>{
+                "nomeusuario": nomeusuariotxt.text,
+                "usuario_codigo": dados,
+              };
+
+              context.pushNamed('Main_Home',pathParameters: pathParameters);
+            }
           } else {
             print("Erro ao cadastrar: ${resposta.statusCode}");
           }
@@ -138,6 +148,16 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
       },
     );
   }
+  final FocusNode confirmaSenhaFocusNode = FocusNode();
+
+  void verificaSenha() {
+    if(senhausuariotxt.text == confirmasenhausuariotxt.text){
+      senhaVerificada = true;
+    }else{
+      senhaVerificada = false;
+      confirmaSenhaFocusNode.requestFocus();
+    }
+  }
 
   @override
   void initState() {
@@ -152,14 +172,14 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
 
     //logFirebaseEvent('screen_view', parameters: {'screen_name': 'auth_Create'});
 
-    _model.emailAddressTextController ??= TextEditingController();
-    _model.emailAddressFocusNode ??= FocusNode();
+    // _model.emailAddressTextController ??= TextEditingController();
+    // _model.emailAddressFocusNode ??= FocusNode();
 
-    _model.passwordTextController ??= TextEditingController();
-    _model.passwordFocusNode ??= FocusNode();
+    // _model.passwordTextController ??= TextEditingController();
+    // _model.passwordFocusNode ??= FocusNode();
 
-    _model.passwordConfirmTextController ??= TextEditingController();
-    _model.passwordConfirmFocusNode ??= FocusNode();
+    // _model.passwordConfirmTextController ??= TextEditingController();
+    // _model.passwordConfirmFocusNode ??= FocusNode();
 
     animationsMap.addAll({
       'rowOnPageLoadAnimation1': AnimationInfo(
@@ -861,108 +881,93 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget>
                           ],
                         ),
                         Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 16.0, 0.0, 0.0),
-                                child: TextFormField(
-                                  controller: confirmasenhausuariotxt,
-                                  //focusNode: _model.passwordFocusNode,
-                                  autofocus: true,
-                                  autofillHints: const [AutofillHints.password],
-                                  obscureText: !_model.passwordVisibility,
-                                  decoration: InputDecoration(
-                                    labelText:
-                                       "Confirmar senha",
-                                    labelStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                                  child: TextFormField(
+                                    controller: confirmasenhausuariotxt,
+                                    focusNode: confirmaSenhaFocusNode, // Associe o FocusNode ao campo
+                                    autofocus: true,
+                                    autofillHints: const [AutofillHints.password],
+                                    obscureText: !_model.passwordVisibility,
+                                    decoration: InputDecoration(
+                                      labelText: "Confirmar senha",
+                                      labelStyle: FlutterFlowTheme.of(context).labelMedium.override(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            letterSpacing: 0.0,
+                                            fontSize: 20,
+                                          ),
+                                      hintText: "Informe sua senha",
+                                      hintStyle: FlutterFlowTheme.of(context).labelMedium.override(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context).alternate,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context).primary,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12.0),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context).error,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12.0),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context).error,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12.0),
+                                      ),
+                                      filled: true,
+                                      fillColor: FlutterFlowTheme.of(context).accent4,
+                                      contentPadding: const EdgeInsetsDirectional.fromSTEB(20.0, 24.0, 20.0, 24.0),
+                                      suffixIcon: InkWell(
+                                        onTap: () => setState(
+                                          () => _model.passwordVisibility = !_model.passwordVisibility,
+                                        ),
+                                        focusNode: FocusNode(skipTraversal: true),
+                                        child: Icon(
+                                          _model.passwordVisibility
+                                              ? Icons.visibility_outlined
+                                              : Icons.visibility_off_outlined,
+                                          color: FlutterFlowTheme.of(context).secondaryText,
+                                          size: 24.0,
+                                        ),
+                                      ),
+                                    ),
+                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
                                           fontFamily: 'Plus Jakarta Sans',
                                           letterSpacing: 0.0,
-                                          fontSize: 20,
                                         ),
-                                    hintText:
-                                        "Informe sua senha",
-                                    hintStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          letterSpacing: 0.0,
-                                        ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    filled: true,
-                                    fillColor:
-                                        FlutterFlowTheme.of(context).accent4,
-                                    contentPadding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            20.0, 24.0, 20.0, 24.0),
-                                    suffixIcon: InkWell(
-                                      onTap: () => setState(
-                                        () => _model.passwordVisibility =
-                                            !_model.passwordVisibility,
-                                      ),
-                                      focusNode: FocusNode(skipTraversal: true),
-                                      child: Icon(
-                                        _model.passwordVisibility
-                                            ? Icons.visibility_outlined
-                                            : Icons.visibility_off_outlined,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        size: 24.0,
-                                      ),
-                                    ),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Plus Jakarta Sans',
-                                        letterSpacing: 0.0,
-                                      ),
-                                  cursorColor:
-                                      FlutterFlowTheme.of(context).primary,
-                                  validator: _model
-                                      .passwordTextControllerValidator
-                                      .asValidator(context),
-                                ).animateOnPageLoad(animationsMap[
-                                    'textFieldOnPageLoadAnimation2']!),
+                                    cursorColor: FlutterFlowTheme.of(context).primary,
+                                    validator: _model.passwordTextControllerValidator.asValidator(context),
+                                    onChanged: (value) {
+                                      // Chama verificaSenha ao terminar de digitar a senha
+                                      // if (value == senhaOriginal) { // Substitua `senhaOriginal` com a senha que você quer comparar
+                                        
+                                      // }
+                                      verificaSenha();
+          },
+                                  ).animateOnPageLoad(animationsMap['textFieldOnPageLoadAnimation2']!),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
                         Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,

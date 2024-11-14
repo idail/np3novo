@@ -130,16 +130,16 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
 
-    if(widget.codigo_departamento_fornecedor == "nada"){
-      recebe_codigo_departamento_fornecedor = 0;
-    }
-    else{
-      var recebe_valor_codigo_departamento_fornecedor = widget.codigo_departamento_fornecedor;
-      recebe_codigo_departamento_fornecedor = int.parse(recebe_valor_codigo_departamento_fornecedor!);
-    }
+    // if(widget.codigo_departamento_fornecedor == "nada"){
+    //   recebe_codigo_departamento_fornecedor = 0;
+    // }
+    // else{
+    //   var recebe_valor_codigo_departamento_fornecedor = widget.codigo_departamento_fornecedor;
+    //   recebe_codigo_departamento_fornecedor = int.parse(recebe_valor_codigo_departamento_fornecedor!);
+    // }
 
     final tabs = {
-      'Main_Home': MainHomeWidget(tipoacesso: widget.tipoacesso,codigousuario: widget.usuario_codigo,nomeusuario: widget.nomeusuario,),
+      'Main_Home': MainHomeWidget(codigousuario: widget.usuario_codigo,nomeusuario: widget.nomeusuario,),
       //'Main_customerList': const MainCustomerListWidget(),
       'Main_Contracts': MainContractsWidget(usuariocodigo: widget.usuario_codigo,tipo_acesso: widget.tipoacesso, 
       codigo_departamento_fornecedor: recebe_codigo_departamento_fornecedor,email_usuario: widget.email_usuario,login_usuario:widget.login_usuario , nome_usuario: widget.nomeusuario,
